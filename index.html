@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Pagos Escolares - Login</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/login.css">
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-card">
+            <div class="logo-section">
+                <svg width="80" height="80" viewBox="0 0 100 100">
+                    <defs>
+                        <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#764ba2;stop-opacity:1" />
+                        </linearGradient>
+                    </defs>
+                    <circle cx="50" cy="50" r="45" fill="url(#grad1)"/>
+                    <path d="M 30 40 L 50 25 L 70 40 L 70 70 L 30 70 Z" fill="white"/>
+                </svg>
+                <h1>Sistema de Pagos</h1>
+                <p>Gestión de Mensualidades Escolares</p>
+            </div>
+
+            <form id="loginForm" class="login-form">
+                <div class="form-group">
+                    <label for="telefono">Usuario</label>
+                    <input type="text" id="telefono" placeholder="Email o teléfono" required>
+                    <span class="error-message" id="errorTelefono"></span>
+                    <small style="color: #666; font-size: 0.85rem; margin-top: 0.25rem; display: block;">
+                        Ingrese su email o teléfono de 8 dígitos
+                    </small>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Contraseña</label>
+                    <input type="password" id="password" placeholder="••••••••" required>
+                    <span class="error-message" id="errorPassword"></span>
+                </div>
+
+                <button type="submit" class="btn-login">Iniciar Sesión</button>
+                <span class="error-message" id="errorLogin"></span>
+            </form>
+
+            <div class="register-link">
+                <p>¿No tienes cuenta? <a href="registro.html">Regístrate aquí</a></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Supabase JS SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
+    <script type="module" src="js/supabase-config.js"></script>
+    <script type="module" src="js/auth.js"></script>
+</body>
+</html>

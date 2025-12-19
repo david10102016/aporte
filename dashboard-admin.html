@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#667eea">
+    <title>Panel Administrativo</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/mobile-enhancements.css">
+    <!-- SweetAlert2 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+</head>
+<body>
+    <header class="dashboard-header">
+        <div class="header-content">
+            <h1>Panel Administrativo</h1>
+            <div class="user-info">
+                <span>Admin</span>
+                <button id="btnLogout" class="btn-logout">Cerrar Sesión</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="dashboard-main">
+        <aside class="sidebar">
+            <nav>
+                <a href="#" class="nav-item active" data-section="estadisticas">
+                    <span>📈</span> Estadísticas
+                </a>
+                <a href="#" class="nav-item" data-section="estudiantes">
+                    <span>👥</span> Estudiantes
+                </a>
+                <a href="#" class="nav-item" data-section="pagos">
+                    <span>💰</span> Pagos
+                </a>
+                <a href="#" class="nav-item" data-section="apoderados">
+                    <span>👨‍👩‍👧</span> Apoderados
+                </a>
+                <a href="#" class="nav-item" data-section="tarifas">
+                    <span>💵</span> Tarifas
+                </a>
+                <a href="#" class="nav-item" data-section="reportes">
+                    <span>📊</span> Reportes
+                </a>
+            </nav>
+        </aside>
+
+        <section class="content">
+            <!-- Sección Estadísticas -->
+            <div id="seccionEstadisticas" class="section-content active">
+                <h2>Resumen General</h2>
+                
+                <div class="card-grid">
+                    <div class="info-card">
+                        <h3>Recaudación Mes Actual</h3>
+                        <p class="amount" id="recaudadoMesActual">Bs 0.00</p>
+                        <small id="nombreMesActual" style="color: #666;"></small>
+                    </div>
+                    <div class="info-card">
+                        <h3>Recaudado Acumulado (2026)</h3>
+                        <p class="amount" id="recaudadoAcumulado">Bs 0.00</p>
+                    </div>
+                    <div class="info-card">
+                        <h3>Meta Anual (2026)</h3>
+                        <p class="amount" id="metaAnual">Bs 0.00</p>
+                    </div>
+                    <div class="info-card">
+                        <h3>Cumplimiento</h3>
+                        <p class="amount" id="tasaCumplimiento" style="font-size: 2.5rem;">0%</p>
+                    </div>
+                </div>
+
+                <div class="card-grid" style="grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); margin-top: 1rem;">
+                    <div class="info-card">
+                        <h3>Total Estudiantes</h3>
+                        <p class="amount" style="font-size: 2rem;" id="totalEstudiantes">0</p>
+                    </div>
+                    <div class="info-card">
+                        <h3>Total Apoderados</h3>
+                        <p class="amount" style="font-size: 2rem;" id="totalApoderados">0</p>
+                    </div>
+                    <div class="info-card">
+                        <h3>Pagos Atrasados</h3>
+                        <p class="amount pending" style="font-size: 2rem;" id="pagosAtrasados">0</p>
+                    </div>
+                    <div class="info-card">
+                        <h3>Pendientes del Mes</h3>
+                        <p class="amount" style="font-size: 2rem; color: #f59e0b;" id="pendientesMes">0</p>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>Resumen por Nivel</h3>
+                    <div id="resumenNiveles"></div>
+                </div>
+            </div>
+
+            <!-- Sección Estudiantes -->
+            <div id="seccionEstudiantes" class="section-content">
+                <h2>Gestión de Estudiantes</h2>
+                
+                <!-- Estadísticas -->
+                <div id="estadisticasEstudiantes" style="margin-bottom: 2rem;">
+                    <!-- Se llena dinámicamente -->
+                </div>
+                
+                <!-- Acciones -->
+                <div class="card" style="margin-bottom: 1rem;">
+                    <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                        <button id="btnImportarExcel" class="btn-primary">
+                            📁 Importar desde Excel
+                        </button>
+                        <button id="btnDescargarPDF" class="btn-secondary">
+                            📄 Descargar Lista de Códigos (PDF)
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Buscador y Filtros -->
+                <div class="card" style="margin-bottom: 1rem;">
+                    <div style="display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 1rem;">
+                        <div>
+                            <input 
+                                type="text" 
+                                id="buscarEstudiante" 
+                                placeholder="🔍 Buscar por nombre o código..." 
+                                style="width: 100%; padding: 0.75rem; border: 1px solid #ddd; border-radius: 8px; font-size: 1rem;"
+                            >
+                        </div>
+                        <div>
+                            <select id="filtroNivel" style="width: 100%; padding: 0.75rem; border: 1px solid #ddd; border-radius: 8px; font-size: 1rem;">
+                                <option value="todos">Todos los niveles</option>
+                                <option value="Primaria">Primaria</option>
+                                <option value="Secundaria">Secundaria</option>
+                            </select>
+                        </div>
+                        <div>
+                            <select id="filtroEstado" style="width: 100%; padding: 0.75rem; border: 1px solid #ddd; border-radius: 8px; font-size: 1rem;">
+                                <option value="todos">Todos los estados</option>
+                                <option value="asignado">Asignados</option>
+                                <option value="disponible">Disponibles</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div id="contadorResultados" style="margin-top: 0.5rem; color: #666; font-size: 0.9rem;">
+                        <!-- Se actualiza dinámicamente -->
+                    </div>
+                </div>
+
+                <!-- Tabla de Estudiantes -->
+                <div class="card">
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Código</th>
+                                    <th>Nombre Completo</th>
+                                    <th>Nivel</th>
+                                    <th>Grado</th>
+                                    <th>Paralelo</th>
+                                    <th>Estado</th>
+                                    <th>Apoderado</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tablaEstudiantes">
+                                <!-- Se llena dinámicamente -->
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sección Pagos -->
+            <div id="seccionPagos" class="section-content">
+                <h2>Verificación de Pagos</h2>
+                
+                <div class="card">
+                    <!-- Se llena dinámicamente -->
+                </div>
+            </div>
+
+            <!-- Sección Apoderados -->
+            <div id="seccionApoderados" class="section-content">
+                <h2>Gestión de Apoderados</h2>
+                
+                <div class="card">
+                    <!-- Se llena dinámicamente -->
+                </div>
+            </div>
+
+            <!-- Sección Tarifas -->
+            <div id="seccionTarifas" class="section-content">
+                <h2>Gestión de Tarifas</h2>
+                
+                <div class="card">
+                    <h3>Tarifas Actuales (Año <span id="anioActual">2025</span>)</h3>
+                    
+                    <div style="display: grid; gap: 1.5rem; margin-top: 1.5rem;">
+                        <div class="form-group">
+                            <label for="tarifaPrimaria">Tarifa Mensual - Primaria (Bs) *</label>
+                            <input type="number" id="tarifaPrimaria" placeholder="100" min="0" step="0.01" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="tarifaSecundaria">Tarifa Mensual - Secundaria (Bs) *</label>
+                            <input type="number" id="tarifaSecundaria" placeholder="120" min="0" step="0.01" required>
+                        </div>
+
+                        <div style="display: flex; gap: 1rem;">
+                            <button type="button" id="btnActualizarTarifas" class="btn-primary">
+                                💾 Actualizar Tarifas
+                            </button>
+                            <button type="button" id="btnCancelarTarifas" class="btn-secondary" style="display: none;">
+                                ❌ Cancelar
+                            </button>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 2rem; padding: 1rem; background: #f0f9ff; border-left: 4px solid #3b82f6; border-radius: 0.5rem;">
+                        <p style="margin: 0; color: #1e40af;">
+                            ℹ️ <strong>Nota:</strong> Las tarifas se aplican para calcular el monto mensual que debe pagar cada apoderado según la cantidad de hijos y el nivel educativo.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="card" style="margin-top: 1.5rem;">
+                    <h3>Historial de Tarifas</h3>
+                    <div style="overflow-x: auto;">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Año</th>
+                                    <th>Primaria</th>
+                                    <th>Secundaria</th>
+                                    <th>Última Actualización</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tablaTarifasHistorial">
+                                <tr>
+                                    <td colspan="4" style="text-align: center;">Cargando...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sección Reportes -->
+            <div id="seccionReportes" class="section-content">
+                <h2>📊 Reportes y Análisis</h2>
+                
+                <!-- Reportes de Estudiantes -->
+                <div class="card" style="margin-bottom: 1.5rem;">
+                    <h3>📚 Reportes de Estudiantes</h3>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1rem; margin-top: 1rem;">
+                        <button onclick="generarReporteEstudiantes('todos')" class="btn-secondary" style="padding: 1rem;">
+                            � Lista Completa de Estudiantes
+                        </button>
+                        <button onclick="generarReporteEstudiantes('primaria')" class="btn-secondary" style="padding: 1rem;">
+                            📘 Estudiantes de Primaria
+                        </button>
+                        <button onclick="generarReporteEstudiantes('secundaria')" class="btn-secondary" style="padding: 1rem;">
+                            📗 Estudiantes de Secundaria
+                        </button>
+                        <button onclick="generarReporteEstudiantes('disponibles')" class="btn-secondary" style="padding: 1rem;">
+                            ⏳ Estudiantes Disponibles
+                        </button>
+                        <button onclick="generarReporteEstudiantes('asignados')" class="btn-secondary" style="padding: 1rem;">
+                            ✅ Estudiantes Asignados
+                        </button>
+                    </div>
+                    <p style="margin-top: 1rem; color: #666; font-size: 0.9rem;">
+                        💡 Los reportes se generan ordenados por apellido y se pueden imprimir directamente
+                    </p>
+                </div>
+
+                <!-- Reportes de Pagos -->
+                <div class="card" style="margin-bottom: 1.5rem;">
+                    <h3>💰 Reportes de Pagos</h3>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1rem; margin-top: 1rem;">
+                        <button onclick="generarReportePagos('mes')" class="btn-secondary" style="padding: 1rem;">
+                            📅 Recaudación Mes Actual
+                        </button>
+                        <button onclick="generarReportePagos('anual')" class="btn-secondary" style="padding: 1rem;">
+                            📊 Recaudación Anual 2026
+                        </button>
+                        <button onclick="generarReportePagos('pendientes')" class="btn-secondary" style="padding: 1rem;">
+                            ⚠️ Pagos Pendientes
+                        </button>
+                        <button onclick="generarReporteMorosos()" class="btn-secondary" style="padding: 1rem;">
+                            🔴 Apoderados Morosos
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Reportes por Apoderado -->
+                <div class="card" style="margin-bottom: 1.5rem;">
+                    <h3>👨‍👩‍👧 Reportes por Apoderado</h3>
+                    <div style="margin-top: 1rem;">
+                        <label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Buscar Apoderado:</label>
+                        <div style="display: flex; gap: 1rem; position: relative;">
+                            <div style="flex: 1; position: relative;">
+                                <input 
+                                    type="text" 
+                                    id="buscarApoderadoInput" 
+                                    placeholder="🔍 Escribe el nombre del apoderado..."
+                                    autocomplete="off"
+                                    style="width: 100%; padding: 0.75rem; border: 1px solid #ddd; border-radius: 8px; font-size: 1rem;"
+                                />
+                                <select 
+                                    id="selectApoderadoReporte" 
+                                    size="5"
+                                    style="display: none; position: absolute; top: 100%; left: 0; right: 0; margin-top: 5px; border: 1px solid #ddd; border-radius: 8px; background: white; z-index: 1000; max-height: 200px; overflow-y: auto; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+                                </select>
+                            </div>
+                            <button onclick="generarReporteApoderado()" class="btn-primary" style="padding: 0.75rem 2rem;">
+                                📄 Generar Reporte Individual
+                            </button>
+                        </div>
+                        <div id="apoderadoSeleccionado" style="margin-top: 0.5rem; font-size: 0.9rem; color: #666;"></div>
+                    </div>
+                </div>
+
+                <!-- Exportaciones -->
+                <div class="card">
+                    <h3>📤 Exportar Datos</h3>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; margin-top: 1rem;">
+                        <button onclick="exportarExcel('estudiantes')" class="btn-success" style="padding: 1rem;">
+                            📊 Exportar Estudiantes a Excel
+                        </button>
+                        <button onclick="exportarExcel('apoderados')" class="btn-success" style="padding: 1rem;">
+                            📊 Exportar Apoderados a Excel
+                        </button>
+                        <button onclick="exportarExcel('pagos')" class="btn-success" style="padding: 1rem;">
+                            📊 Exportar Pagos a Excel
+                        </button>
+                    </div>
+                    <p style="margin-top: 1rem; color: #666; font-size: 0.9rem;">
+                        💡 Los archivos se descargarán en formato .xlsx compatible con Excel
+                    </p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Supabase JS SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- SheetJS para procesar Excel -->
+    <script src="https://cdn.sheetjs.com/xlsx-0.20.1/package/dist/xlsx.full.min.js"></script>
+    <!-- jsPDF para generar PDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    
+    <script type="module" src="js/supabase-config.js?v=1.1"></script>
+    <script type="module" src="js/admin.js?v=1.1"></script>
+</body>
+</html>

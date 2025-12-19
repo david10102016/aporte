@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#667eea">
+    <title>Registro de Apoderado</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/login.css">
+    <link rel="stylesheet" href="css/mobile-enhancements.css">
+    <!-- SweetAlert2 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-card registro-card">
+            <div class="logo-section">
+                <h1>Registro de Apoderado</h1>
+                <p>Complete sus datos para crear su cuenta</p>
+            </div>
+
+            <form id="registroForm" class="login-form">
+                <div class="form-group">
+                    <label for="nombreCompleto">Nombre Completo *</label>
+                    <input type="text" id="nombreCompleto" placeholder="Juan Pérez Rojas" required>
+                    <span class="error-message" id="errorNombre"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="telefonoRegistro">Teléfono * (Usuario para login)</label>
+                    <input type="text" id="telefonoRegistro" placeholder="71234567" maxlength="8" required>
+                    <span class="error-message" id="errorTelefonoReg"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="emailRegistro">Email</label>
+                    <input type="email" id="emailRegistro" placeholder="ejemplo@correo.com">
+                    <span class="error-message" id="errorEmail"></span>
+                    <small style="color: #666; font-size: 0.85rem; display: block; margin-top: 0.25rem;">
+                        Deje vacío para usar solo su teléfono como usuario
+                    </small>
+                </div>
+
+                <div class="form-group">
+                    <label for="passwordRegistro">Contraseña *</label>
+                    <input type="password" id="passwordRegistro" placeholder="••••••••" required>
+                    <span class="error-message" id="errorPass"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="confirmPassword">Confirmar Contraseña *</label>
+                    <input type="password" id="confirmPassword" placeholder="••••••••" required>
+                    <span class="error-message" id="errorConfirm"></span>
+                </div>
+
+                <hr>
+                <h3>Registra a tus hijos</h3>
+                <p class="info-text">Ingresa los códigos de 4 caracteres entregados por el colegio</p>
+
+                <div id="hijosContainer">
+                    <div class="form-group hijo-item">
+                        <label>Código del estudiante</label>
+                        <div class="codigo-input-group">
+                            <input type="text" class="codigo-hijo" placeholder="A3B7" maxlength="4" required>
+                            <button type="button" class="btn-buscar-codigo">Buscar</button>
+                        </div>
+                        <div class="estudiante-info"></div>
+                        <span class="error-message error-codigo"></span>
+                    </div>
+                </div>
+
+                <button type="button" id="btnAgregarHijo" class="btn-secondary">+ Agregar otro hijo</button>
+
+                <button type="submit" class="btn-login">Enviar Solicitud</button>
+                <span class="error-message" id="errorRegistro"></span>
+            </form>
+
+            <div class="register-link">
+                <p>¿Ya tienes cuenta? <a href="index.html">Inicia sesión</a></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Supabase JS SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
+    <script type="module" src="js/supabase-config.js"></script>
+    <script type="module" src="js/validaciones.js"></script>
+    <script type="module" src="js/registro.js"></script>
+</body>
+</html>

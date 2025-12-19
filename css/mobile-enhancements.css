@@ -1,0 +1,199 @@
+/* ========== MEJORAS MÓVILES Y TOUCH ========== */
+
+/* Scrolling suave en todo el sitio */
+html {
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* Prevenir selección accidental de texto */
+.no-select {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* Botones con mejor área táctil (mínimo 44x44px recomendado) */
+button,
+.btn,
+a.nav-item,
+.theme-btn {
+    min-height: 44px;
+    min-width: 44px;
+}
+
+/* Enlaces y botones táctiles */
+a,
+button,
+.btn {
+    -webkit-tap-highlight-color: rgba(102, 126, 234, 0.2);
+}
+
+/* Mejora de scrollbars en móvil */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(102, 126, 234, 0.4);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(102, 126, 234, 0.6);
+}
+
+/* Optimización de fuentes para móvil */
+@media (max-width: 768px) {
+    body {
+        text-rendering: optimizeLegibility;
+        -webkit-font-smoothing: antialiased;
+    }
+}
+
+/* Evitar zoom en landscape en móviles */
+@media screen and (orientation: landscape) and (max-height: 500px) {
+    body {
+        font-size: 14px;
+    }
+}
+
+/* Loading states para botones */
+button.loading,
+.btn.loading {
+    pointer-events: none;
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+/* Estados de focus visibles para accesibilidad */
+button:focus-visible,
+.btn:focus-visible,
+input:focus-visible,
+select:focus-visible,
+a:focus-visible {
+    outline: 3px solid var(--primary-color);
+    outline-offset: 2px;
+}
+
+/* Mejora de rendimiento con will-change */
+.nav-item,
+.theme-btn,
+button,
+.btn {
+    will-change: transform;
+}
+
+/* Animaciones reducidas para usuarios que lo prefieren */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --text-color: #e5e7eb;
+        --dark-color: #f3f4f6;
+        --light-gray: #1f2937;
+        --border-color: #374151;
+    }
+}
+
+/* Mejora de contraste en tablas móviles */
+@media (max-width: 768px) {
+    table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    table tbody tr:active {
+        background: rgba(102, 126, 234, 0.1);
+    }
+}
+
+/* Card hover en dispositivos táctiles */
+@media (hover: none) and (pointer: coarse) {
+    .info-card:active,
+    .card:active,
+    .hijo-card:active {
+        transform: scale(0.98);
+        transition: transform 0.1s ease;
+    }
+}
+
+/* Mensaje de orientación para mejor experiencia */
+.rotate-message {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(102, 126, 234, 0.95);
+    color: white;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 20px;
+    z-index: 9999;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.rotate-message svg {
+    width: 80px;
+    height: 80px;
+    animation: rotate 2s ease-in-out infinite;
+}
+
+@keyframes rotate {
+    0%, 100% { transform: rotate(0deg); }
+    25% { transform: rotate(-20deg); }
+    75% { transform: rotate(20deg); }
+}
+
+/* Mostrar mensaje solo en landscape en pantallas muy pequeñas */
+@media screen and (orientation: landscape) and (max-height: 400px) and (max-width: 768px) {
+    .rotate-message.active {
+        display: flex;
+    }
+}
+
+/* Fix para iOS Safari bottom bar */
+@supports (-webkit-touch-callout: none) {
+    .dashboard-main {
+        min-height: -webkit-fill-available;
+    }
+}
+
+/* Mejora de inputs en iOS */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border-radius: 8px;
+}
+
+/* Prevenir double-tap zoom en iOS */
+button,
+.btn,
+input,
+select,
+a {
+    touch-action: manipulation;
+}

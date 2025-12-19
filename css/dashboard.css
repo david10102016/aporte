@@ -1,0 +1,597 @@
+/* ========== DASHBOARD LAYOUT ========== */
+
+body {
+    background: var(--light-gray);
+}
+
+.dashboard-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 1rem 1.5rem;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1400px;
+    margin: 0 auto;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.header-content h1 {
+    font-size: clamp(1.2rem, 4vw, 1.5rem);
+    font-weight: 600;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
+.user-info span {
+    font-weight: 500;
+    font-size: clamp(0.875rem, 2.5vw, 1rem);
+}
+
+/* ========== MAIN LAYOUT ========== */
+
+.dashboard-main {
+    display: flex;
+    max-width: 1400px;
+    margin: 0 auto;
+    min-height: calc(100vh - 80px);
+}
+
+/* ========== SIDEBAR ========== */
+
+.sidebar {
+    width: 250px;
+    min-width: 250px;
+    background: white;
+    padding: 2rem 1rem;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease;
+}
+
+.sidebar nav {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    color: var(--text-color);
+    text-decoration: none;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    font-size: clamp(0.875rem, 2vw, 1rem);
+}
+
+.nav-item span {
+    font-size: clamp(1rem, 3vw, 1.25rem);
+}
+
+.nav-item:hover {
+    background: var(--light-gray);
+    transform: translateX(5px);
+}
+
+.nav-item.active {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+/* ========== CONTENT AREA ========== */
+
+.content {
+    flex: 1;
+    padding: clamp(1rem, 3vw, 2rem);
+    min-width: 0;
+}
+
+.content h2 {
+    color: var(--dark-color);
+    margin-bottom: 1.5rem;
+    font-size: clamp(1.25rem, 4vw, 1.75rem);
+}
+
+.section-content {
+    display: none;
+}
+
+.section-content.active {
+    display: block;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ========== ACTIONS BAR ========== */
+
+.actions-bar {
+    display: flex;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.actions-bar button {
+    flex: 1;
+    min-width: 150px;
+}
+
+.filters {
+    display: flex;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.filters input,
+.filters select {
+    flex: 1;
+    min-width: 180px;
+}
+
+/* ========== PREVIEW CONTAINER ========== */
+
+.preview-container {
+    margin-top: 1rem;
+}
+
+.preview-container img {
+    max-width: 100%;
+    max-height: 300px;
+    border-radius: 8px;
+    border: 2px solid var(--border-color);
+}
+
+/* ========== UPLOAD PROGRESS ========== */
+
+.upload-progress {
+    margin-top: 1rem;
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+/* ========== DETALLE NIVELES ========== */
+
+#detalleNiveles {
+    display: grid;
+    gap: 1rem;
+}
+
+.nivel-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem;
+    background: var(--light-gray);
+    border-radius: 8px;
+    border-left: 4px solid var(--primary-color);
+}
+
+.nivel-item.completo {
+    border-left-color: var(--success-color);
+}
+
+.nivel-item.parcial {
+    border-left-color: var(--warning-color);
+}
+
+.nivel-item.pendiente {
+    border-left-color: var(--danger-color);
+}
+
+/* ========== LISTA HIJOS ========== */
+
+#listaHijos {
+    display: grid;
+    gap: 1rem;
+}
+
+.hijo-card {
+    padding: 1rem;
+    background: var(--light-gray);
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
+.hijo-card .info {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-width: 200px;
+}
+
+.hijo-card .info strong {
+    font-size: clamp(1rem, 2.5vw, 1.1rem);
+    color: var(--dark-color);
+}
+
+.hijo-card .info span {
+    color: var(--text-color);
+    font-size: clamp(0.8rem, 2vw, 0.9rem);
+}
+
+/* ========== SOLICITUD CARD ========== */
+
+.solicitud-card {
+    padding: 1.25rem;
+    background: var(--light-gray);
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    border-left: 4px solid var(--warning-color);
+}
+
+.solicitud-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
+.solicitud-header strong {
+    font-size: clamp(1rem, 2.5vw, 1.1rem);
+}
+
+.solicitud-body {
+    margin: 1rem 0;
+}
+
+.solicitud-body p {
+    font-size: clamp(0.875rem, 2vw, 1rem);
+}
+
+.solicitud-actions {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
+.solicitud-actions button {
+    flex: 1;
+    min-width: 120px;
+}
+
+/* ========== RESUMEN NIVELES (ADMIN) ========== */
+
+#resumenNiveles {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+}
+
+.nivel-stats {
+    padding: 1rem;
+    background: var(--light-gray);
+    border-radius: 8px;
+    border-left: 4px solid var(--primary-color);
+}
+
+.nivel-stats h4 {
+    color: var(--dark-color);
+    margin-bottom: 0.5rem;
+}
+
+.nivel-stats p {
+    color: var(--text-color);
+    font-size: 0.9rem;
+}
+
+/* ========== RESPONSIVE ========== */
+
+/* Tablets y pantallas medianas */
+@media (max-width: 1024px) {
+    .dashboard-main {
+        flex-direction: column;
+    }
+    
+    .sidebar {
+        width: 100%;
+        min-width: 100%;
+        padding: 1rem;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    }
+    
+    .sidebar nav {
+        flex-direction: row;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: thin;
+        padding-bottom: 0.5rem;
+    }
+    
+    .sidebar nav::-webkit-scrollbar {
+        height: 4px;
+    }
+    
+    .sidebar nav::-webkit-scrollbar-thumb {
+        background: var(--primary-color);
+        border-radius: 10px;
+    }
+    
+    .nav-item {
+        white-space: nowrap;
+        min-width: auto;
+    }
+    
+    .nav-item:hover {
+        transform: translateX(0) translateY(-2px);
+    }
+    
+    .content {
+        padding: 1.5rem;
+    }
+    
+    #resumenNiveles {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    }
+}
+
+/* Móviles */
+@media (max-width: 768px) {
+    .dashboard-header {
+        padding: 1rem;
+    }
+    
+    .header-content {
+        gap: 0.75rem;
+    }
+    
+    .header-content h1 {
+        width: 100%;
+        text-align: center;
+    }
+    
+    .user-info {
+        width: 100%;
+        justify-content: center;
+        font-size: 0.9rem;
+    }
+    
+    .btn-logout {
+        padding: 6px 12px;
+        font-size: 0.875rem;
+    }
+    
+    .sidebar {
+        padding: 0.75rem;
+    }
+    
+    .sidebar nav {
+        gap: 0.5rem;
+    }
+    
+    .nav-item {
+        padding: 10px 14px;
+        font-size: 0.875rem;
+    }
+    
+    .content {
+        padding: 1rem;
+    }
+    
+    .content h2 {
+        margin-bottom: 1rem;
+    }
+    
+    .actions-bar {
+        gap: 0.5rem;
+    }
+    
+    .actions-bar button {
+        width: 100%;
+        min-width: auto;
+    }
+    
+    .filters {
+        gap: 0.5rem;
+    }
+    
+    .filters input,
+    .filters select {
+        width: 100%;
+        min-width: auto;
+    }
+    
+    .card-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    .solicitud-card {
+        padding: 1rem;
+    }
+    
+    .solicitud-actions button {
+        min-width: auto;
+        padding: 10px 16px;
+    }
+    
+    #resumenNiveles {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Móviles pequeños */
+@media (max-width: 480px) {
+    .dashboard-header {
+        padding: 0.75rem;
+    }
+    
+    .header-content h1 {
+        font-size: 1.1rem;
+    }
+    
+    .user-info span {
+        font-size: 0.85rem;
+    }
+    
+    .content {
+        padding: 0.75rem;
+    }
+    
+    .content h2 {
+        font-size: 1.25rem;
+    }
+    
+    .card {
+        padding: 1rem;
+    }
+    
+    .info-card {
+        padding: 1rem;
+    }
+    
+    .info-card .amount {
+        font-size: 1.5rem;
+    }
+    
+    .nav-item {
+        padding: 8px 12px;
+        gap: 8px;
+    }
+    
+    .hijo-card {
+        padding: 0.75rem;
+    }
+    
+    .hijo-card .info {
+        min-width: 150px;
+    }
+}
+
+/* ========== BADGES (ETIQUETAS DE ESTADO) ========== */
+
+.badge {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 12px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-transform: capitalize;
+}
+
+.badge-success {
+    background: #d1fae5;
+    color: #065f46;
+}
+
+.badge-warning {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.badge-danger {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.badge-info {
+    background: #dbeafe;
+    color: #1e40af;
+}
+
+/* ========== BOTONES DE ACCIÓN ========== */
+
+.btn-success {
+    background: #10b981;
+    color: white;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.btn-success:hover {
+    background: #059669;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+}
+
+.btn-danger {
+    background: #ef4444;
+    color: white;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.btn-danger:hover {
+    background: #dc2626;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+}
+
+/* ========== TABLA RESPONSIVE ========== */
+
+.table-container {
+    overflow-x: auto;
+    margin-top: 1rem;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+}
+
+table thead {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+table th {
+    padding: 1rem;
+    text-align: left;
+    font-weight: 600;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+}
+
+table td {
+    padding: 1rem;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+table tr:hover {
+    background: #f9fafb;
+}
+
+table tr:last-child td {
+    border-bottom: none;
+}

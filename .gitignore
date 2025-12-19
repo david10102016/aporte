@@ -1,0 +1,47 @@
+# Dependencias de Node (si usas Node.js)
+node_modules/
+package-lock.json
+
+# Archivos de entorno (CREDENCIALES)
+.env
+.env.local
+.env.production
+
+# Credenciales de Firebase (legacy - si decides volver a usar)
+firebase-credentials.json
+js/firebase-credentials.js
+
+# Credenciales de Supabase (PROTEGER SIEMPRE)
+js/supabase-credentials.js
+
+# Archivos de sistema
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Archivos de IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Build
+dist/
+build/
+
+# Archivos temporales
+*.tmp
+*.temp
+.cache/
+
+# Firebase
+.firebase/
+firebase-debug.log
+firestore-debug.log

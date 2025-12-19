@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#667eea">
+    <title>Mi Panel - Apoderado</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/mobile-enhancements.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+    <header class="dashboard-header">
+        <div class="header-content">
+            <h1>Panel de Apoderado</h1>
+            <div class="user-info">
+                <span id="nombreUsuario"></span>
+                <button id="btnLogout" class="btn-logout">Cerrar Sesión</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="dashboard-main">
+        <aside class="sidebar">
+            <nav>
+                <a href="#" class="nav-item active" data-section="resumen">
+                    <span>📊</span> Resumen
+                </a>
+                <a href="#" class="nav-item" data-section="subir-pago">
+                    <span>💳</span> Subir Pago
+                </a>
+                <a href="#" class="nav-item" data-section="historial">
+                    <span>📋</span> Historial
+                </a>
+                <a href="#" class="nav-item" data-section="mis-hijos">
+                    <span>👨‍👩‍👧‍👦</span> Mis Hijos
+                </a>
+            </nav>
+        </aside>
+
+        <section class="content">
+            <!-- Sección Resumen -->
+            <div id="seccionResumen" class="section-content active">
+                <h2>Resumen de Cuenta</h2>
+                
+                <div class="card-grid">
+                    <div class="info-card">
+                        <h3>Total a Pagar Este Mes</h3>
+                        <p class="amount" id="totalMes">Bs 0</p>
+                    </div>
+                    <div class="info-card">
+                        <h3>Saldo Pendiente</h3>
+                        <p class="amount pending" id="saldoPendiente">Bs 0</p>
+                    </div>
+                    <div class="info-card">
+                        <h3>Hijos Registrados</h3>
+                        <p class="amount" id="totalHijos">0</p>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>Detalle por Nivel</h3>
+                    <div id="detalleNiveles"></div>
+                </div>
+            </div>
+
+            <!-- Sección Subir Pago -->
+            <div id="seccionSubirPago" class="section-content">
+                <h2>Subir Comprobante de Pago</h2>
+                
+                <div class="card">
+                    <form id="formSubirPago">
+                        <div class="form-group">
+                            <label for="mesPago">Mes del Pago (Gestión Educativa) *</label>
+                            <select id="mesPago" required>
+                                <option value="">Seleccione mes</option>
+                                <option value="2026-02">Febrero 2026</option>
+                                <option value="2026-03">Marzo 2026</option>
+                                <option value="2026-04">Abril 2026</option>
+                                <option value="2026-05">Mayo 2026</option>
+                                <option value="2026-06">Junio 2026</option>
+                                <option value="2026-07">Julio 2026</option>
+                                <option value="2026-08">Agosto 2026</option>
+                                <option value="2026-09">Septiembre 2026</option>
+                                <option value="2026-10">Octubre 2026</option>
+                                <option value="2026-11">Noviembre 2026</option>
+                            </select>
+                            <small style="color: #666; display: block; margin-top: 0.5rem;">
+                                La gestión educativa comprende 10 meses (Febrero - Noviembre)
+                            </small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="montoPago">Monto Pagado (Bs) *</label>
+                            <input type="number" id="montoPago" placeholder="100" min="0" step="0.01" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="comprobante">Comprobante de Pago (Imagen) *</label>
+                            <input type="file" id="comprobante" accept="image/*" required>
+                            <div id="previewContainer" class="preview-container"></div>
+                        </div>
+
+                        <button type="submit" class="btn-primary">Subir Comprobante</button>
+                        <div id="uploadProgress" class="upload-progress"></div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Sección Historial -->
+            <div id="seccionHistorial" class="section-content">
+                <h2>Historial de Pagos</h2>
+                
+                <div class="card">
+                    <div class="table-container">
+                        <table id="tablaPagos">
+                            <thead>
+                                <tr>
+                                    <th>Mes</th>
+                                    <th>Monto</th>
+                                    <th>Estado</th>
+                                    <th>Fecha Subida</th>
+                                    <th>Comprobante</th>
+                                </tr>
+                            </thead>
+                            <tbody id="historialPagos">
+                                <!-- Se llena dinámicamente -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sección Mis Hijos -->
+            <div id="seccionMisHijos" class="section-content">
+                <h2>Mis Hijos Registrados</h2>
+                
+                <div class="card">
+                    <div id="listaHijos"></div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script type="module" src="js/supabase-config.js"></script>
+    <script type="module" src="js/validaciones.js"></script>
+    <script type="module" src="js/padre.js"></script>
+    <script type="module" src="js/cloudinary.js"></script>
+</body>
+</html>
