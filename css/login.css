@@ -753,4 +753,108 @@ body::after {
         margin-top: 18px;
         padding-top: 15px;
     }
+    .theme-selector {
+        text-align: center;
+        margin-top: 32px;
+        padding-top: 24px;
+        border-top: 1px solid #e2e8f0;
+    }
+    .theme-label {
+        font-size: 1rem;
+        margin-bottom: 16px;
+    }
+    .theme-buttons {
+        display: flex;
+        justify-content: center;
+        gap: 18px;
+        margin-bottom: 10px;
+    }
+    .theme-btn {
+        width: 54px;
+        height: 54px;
+        border-width: 3px;
+    }
+    .login-footer {
+        padding: 15px 0 15px 0;
+        width: 100vw;
+        left: 0;
+        right: 0;
+        min-width: 0;
+    }
+    .footer-content {
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        width: 100vw;
+        text-align: center;
+        margin: 0;
+    }
+    .copyright {
+        width: 100vw;
+        text-align: center;
+        margin: 0;
+    }
+    .whatsapp-link {
+        margin: 0 auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .input-with-icon input {
+        padding-left: 2.5rem !important;
+        font-size: 1rem !important;
+    }
+    .input-icon {
+        left: 10px !important;
+        font-size: 1.2rem !important;
+    }
+    .theme-selector {
+        text-align: center;
+        margin-top: 32px;
+        padding-top: 24px;
+        border-top: 1px solid #e2e8f0;
+    }
+    .theme-label {
+        font-size: 1rem;
+        margin-bottom: 16px;
+    }
+    .theme-buttons {
+        display: flex;
+        justify-content: center;
+        gap: 18px;
+        margin-bottom: 10px;
+    }
+    .theme-btn {
+        width: 54px;
+        height: 54px;
+        border-width: 3px;
+    }
+    .login-footer {
+        padding: 15px 0 15px 0;
+        width: 100vw;
+        left: 0;
+        right: 0;
+        min-width: 0;
+    }
+    .footer-content {
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        width: 100vw;
+        text-align: center;
+        margin: 0;
+    }
+    .copyright {
+        width: 100vw;
+        text-align: center;
+        margin: 0;
+    }
+    .whatsapp-link {
+        margin: 0 auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 }
