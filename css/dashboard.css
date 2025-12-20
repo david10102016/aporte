@@ -8,39 +8,46 @@
     scrollbar-width: thin;
     padding-bottom: 0.5rem;
 }
+.sidebar nav {
+    display: flex;
+    flex-direction: row;
+    gap: 0.7rem;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    padding-bottom: 0.7rem;
+    background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(102,126,234,0.08);
+}
 .nav-item {
     display: flex;
     align-items: center;
-    gap: 8px;
-    padding: 10px 14px;
-    color: var(--text-color);
+    gap: 12px;
+    padding: 14px 18px;
+    color: #fff;
     text-decoration: none;
-    border-radius: 8px;
-    font-weight: 500;
-    font-size: 0.95rem;
-    min-width: 90px;
-    max-width: 120px;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 1.1rem;
+    min-width: 100px;
+    max-width: 140px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    background: rgba(255,255,255,0.08);
+    transition: background 0.2s, box-shadow 0.2s;
+    box-shadow: 0 2px 8px rgba(102,126,234,0.04);
 }
 .nav-item span {
-    font-size: 1.2rem;
+    font-size: 1.5rem;
+    margin-right: 4px;
 }
-@media (max-width: 600px) {
-    .sidebar nav {
-        gap: 0.3rem;
-        padding-bottom: 0.3rem;
-    }
-    .nav-item {
-        font-size: 0.85rem;
-        min-width: 70px;
-        max-width: 90px;
-        padding: 8px 8px;
-        gap: 5px;
-    }
-    .nav-item span {
-        font-size: 1rem;
+.nav-item.active {
+    background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+    color: #fff;
+    box-shadow: 0 4px 16px rgba(102, 126, 234, 0.18);
+}
     }
 }
 /* ========== AJUSTES QUIRÚRGICOS DE RESPONSIVIDAD EN DASHBOARD ========== */
@@ -178,20 +185,21 @@ body {
 
 /* ========== SIDEBAR ========== */
 
-.sidebar {
-    width: 250px;
-    min-width: 250px;
-    background: white;
-    padding: 2rem 1rem;
-    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.05);
-    transition: transform 0.3s ease;
-}
-
-.sidebar nav {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-}
+    .sidebar nav {
+        gap: 0.2rem;
+        padding-bottom: 0.2rem;
+    }
+    .nav-item {
+        font-size: 1rem;
+        min-width: 70px;
+        max-width: 100px;
+        padding: 10px 10px;
+        gap: 8px;
+        border-radius: 8px;
+    }
+    .nav-item span {
+        font-size: 1.2rem;
+    }
 
 .nav-item {
     display: flex;
