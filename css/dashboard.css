@@ -1,3 +1,48 @@
+/* ========== NAVBAR SECCIONES RESPONSIVA ========== */
+.sidebar nav {
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    padding-bottom: 0.5rem;
+}
+.nav-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 14px;
+    color: var(--text-color);
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 0.95rem;
+    min-width: 90px;
+    max-width: 120px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.nav-item span {
+    font-size: 1.2rem;
+}
+@media (max-width: 600px) {
+    .sidebar nav {
+        gap: 0.3rem;
+        padding-bottom: 0.3rem;
+    }
+    .nav-item {
+        font-size: 0.85rem;
+        min-width: 70px;
+        max-width: 90px;
+        padding: 8px 8px;
+        gap: 5px;
+    }
+    .nav-item span {
+        font-size: 1rem;
+    }
+}
 /* ========== AJUSTES QUIRÚRGICOS DE RESPONSIVIDAD EN DASHBOARD ========== */
 @media (max-width: 600px) {
     .card, .info-card {
