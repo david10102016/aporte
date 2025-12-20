@@ -1252,6 +1252,7 @@ function generarHTMLReporteEstudiantes(estudiantes, filtro) {
     <html>
     <head>
         <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Reporte de Estudiantes - ${filtroTexto[filtro]}</title>
         <style>
             body { font-family: Arial, sans-serif; padding: 20px; }
@@ -1266,6 +1267,13 @@ function generarHTMLReporteEstudiantes(estudiantes, filtro) {
             .print-btn { margin: 20px 0; padding: 10px 20px; background: #2563eb; color: white; border: none; cursor: pointer; border-radius: 5px; }
             @media print {
                 .print-btn { display: none; }
+            }
+            @media (max-width: 600px) {
+                body { padding: 6vw 2vw; font-size: 1.08em; }
+                table { font-size: 1em; min-width: 600px; display: block; overflow-x: auto; }
+                th, td { font-size: 1em; padding: 0.85em 0.5em; }
+                .header h1 { font-size: 1.2em; }
+                .header h2 { font-size: 1em; }
             }
         </style>
     </head>
@@ -1411,6 +1419,7 @@ function generarHTMLReportePagos(pagos, tipo) {
     <html>
     <head>
         <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Reporte de Pagos - ${tipoTexto[tipo]}</title>
         <style>
             body { font-family: Arial, sans-serif; padding: 20px; }
@@ -1427,6 +1436,13 @@ function generarHTMLReportePagos(pagos, tipo) {
             .print-btn { margin: 20px 0; padding: 10px 20px; background: #2563eb; color: white; border: none; cursor: pointer; border-radius: 5px; }
             @media print {
                 .print-btn { display: none; }
+            }
+            @media (max-width: 600px) {
+                body { padding: 6vw 2vw; font-size: 1.08em; }
+                table { font-size: 1em; min-width: 600px; display: block; overflow-x: auto; }
+                th, td { font-size: 1em; padding: 0.85em 0.5em; }
+                .header h1 { font-size: 1.2em; }
+                .header h2 { font-size: 1em; }
             }
         </style>
     </head>
@@ -1660,6 +1676,7 @@ function generarHTMLReporteMorosos(morosos) {
     <html>
     <head>
         <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Reporte de Apoderados Morosos</title>
         <style>
             body { font-family: Arial, sans-serif; padding: 20px; }
@@ -1675,6 +1692,13 @@ function generarHTMLReporteMorosos(morosos) {
             .meses-vencidos { color: #dc2626; font-weight: bold; }
             @media print {
                 .print-btn { display: none; }
+            }
+            @media (max-width: 600px) {
+                body { padding: 6vw 2vw; font-size: 1.08em; }
+                table { font-size: 1em; min-width: 600px; display: block; overflow-x: auto; }
+                th, td { font-size: 1em; padding: 0.85em 0.5em; }
+                .header h1 { font-size: 1.2em; }
+                .header h2 { font-size: 1em; }
             }
         </style>
     </head>
@@ -1979,6 +2003,7 @@ function generarHTMLReporteApoderado(apoderado, tarifas) {
     <html>
     <head>
         <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Reporte Individual - ${apoderado.nombre_completo}</title>
         <style>
             body { font-family: Arial, sans-serif; padding: 20px; }
@@ -1997,6 +2022,13 @@ function generarHTMLReporteApoderado(apoderado, tarifas) {
             .print-btn { margin: 20px 0; padding: 10px 20px; background: #2563eb; color: white; border: none; cursor: pointer; border-radius: 5px; }
             @media print {
                 .print-btn { display: none; }
+            }
+            @media (max-width: 600px) {
+                body { padding: 6vw 2vw; font-size: 1.08em; }
+                table { font-size: 1em; min-width: 600px; display: block; overflow-x: auto; }
+                th, td { font-size: 1em; padding: 0.85em 0.5em; }
+                .header h1 { font-size: 1.2em; }
+                .header h2 { font-size: 1em; }
             }
         </style>
     </head>
