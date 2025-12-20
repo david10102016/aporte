@@ -1281,7 +1281,7 @@ function generarHTMLReporteEstudiantes(estudiantes, filtro) {
                 .header, .info-box, table { margin-left: 0 !important; margin-right: 0 !important; }
                 .header h1 { font-size: 1.2em; }
                 .header h2 { font-size: 1em; }
-                table { font-size: 1em; min-width: 600px; display: block; overflow-x: auto; width: 100vw !important; }
+                table { font-size: 1em; width: 100vw !important; max-width: 100vw !important; display: table; table-layout: auto; }
                 th, td { font-size: 1em; padding: 0.85em 0.5em; }
             }
         </style>
@@ -1459,7 +1459,7 @@ function generarHTMLReportePagos(pagos, tipo) {
                 .header, .info-box, table { margin-left: 0 !important; margin-right: 0 !important; }
                 .header h1 { font-size: 1.2em; }
                 .header h2 { font-size: 1em; }
-                table { font-size: 1em; min-width: 600px; display: block; overflow-x: auto; width: 100vw !important; }
+                table { font-size: 1em; width: 100vw !important; max-width: 100vw !important; display: table; table-layout: auto; }
                 th, td { font-size: 1em; padding: 0.85em 0.5em; }
             }
         </style>
@@ -1724,7 +1724,7 @@ function generarHTMLReporteMorosos(morosos) {
                 .header, .alert, table { margin-left: 0 !important; margin-right: 0 !important; }
                 .header h1 { font-size: 1.2em; }
                 .header h2 { font-size: 1em; }
-                table { font-size: 1em; min-width: 600px; display: block; overflow-x: auto; width: 100vw !important; }
+                table { font-size: 1em; width: 100vw !important; max-width: 100vw !important; display: table; table-layout: auto; }
                 th, td { font-size: 1em; padding: 0.85em 0.5em; }
             }
         </style>
@@ -2063,7 +2063,7 @@ function generarHTMLReporteApoderado(apoderado, tarifas) {
                 .header, .section, table { margin-left: 0 !important; margin-right: 0 !important; }
                 .header h1 { font-size: 1.2em; }
                 .header h2 { font-size: 1em; }
-                table { font-size: 1em; min-width: 600px; display: block; overflow-x: auto; width: 100vw !important; }
+                table { font-size: 1em; width: 100vw !important; max-width: 100vw !important; display: table; table-layout: auto; }
                 th, td { font-size: 1em; padding: 0.85em 0.5em; }
             }
         </style>
