@@ -1269,11 +1269,20 @@ function generarHTMLReporteEstudiantes(estudiantes, filtro) {
                 .print-btn { display: none; }
             }
             @media (max-width: 600px) {
-                body { padding: 6vw 2vw; font-size: 1.08em; }
-                table { font-size: 1em; min-width: 600px; display: block; overflow-x: auto; }
-                th, td { font-size: 1em; padding: 0.85em 0.5em; }
+                html, body {
+                    width: 100vw !important;
+                    min-width: 0;
+                    max-width: 100vw;
+                    padding: 0 !important;
+                    margin: 0 !important;
+                    overflow-x: auto !important;
+                }
+                body { font-size: 1.08em; background: #fff; }
+                .header, .info-box, table { margin-left: 0 !important; margin-right: 0 !important; }
                 .header h1 { font-size: 1.2em; }
                 .header h2 { font-size: 1em; }
+                table { font-size: 1em; min-width: 600px; display: block; overflow-x: auto; width: 100vw !important; }
+                th, td { font-size: 1em; padding: 0.85em 0.5em; }
             }
         </style>
     </head>
@@ -1438,11 +1447,20 @@ function generarHTMLReportePagos(pagos, tipo) {
                 .print-btn { display: none; }
             }
             @media (max-width: 600px) {
-                body { padding: 6vw 2vw; font-size: 1.08em; }
-                table { font-size: 1em; min-width: 600px; display: block; overflow-x: auto; }
-                th, td { font-size: 1em; padding: 0.85em 0.5em; }
+                html, body {
+                    width: 100vw !important;
+                    min-width: 0;
+                    max-width: 100vw;
+                    padding: 0 !important;
+                    margin: 0 !important;
+                    overflow-x: auto !important;
+                }
+                body { font-size: 1.08em; background: #fff; }
+                .header, .info-box, table { margin-left: 0 !important; margin-right: 0 !important; }
                 .header h1 { font-size: 1.2em; }
                 .header h2 { font-size: 1em; }
+                table { font-size: 1em; min-width: 600px; display: block; overflow-x: auto; width: 100vw !important; }
+                th, td { font-size: 1em; padding: 0.85em 0.5em; }
             }
         </style>
     </head>
@@ -1694,11 +1712,20 @@ function generarHTMLReporteMorosos(morosos) {
                 .print-btn { display: none; }
             }
             @media (max-width: 600px) {
-                body { padding: 6vw 2vw; font-size: 1.08em; }
-                table { font-size: 1em; min-width: 600px; display: block; overflow-x: auto; }
-                th, td { font-size: 1em; padding: 0.85em 0.5em; }
+                html, body {
+                    width: 100vw !important;
+                    min-width: 0;
+                    max-width: 100vw;
+                    padding: 0 !important;
+                    margin: 0 !important;
+                    overflow-x: auto !important;
+                }
+                body { font-size: 1.08em; background: #fff; }
+                .header, .alert, table { margin-left: 0 !important; margin-right: 0 !important; }
                 .header h1 { font-size: 1.2em; }
                 .header h2 { font-size: 1em; }
+                table { font-size: 1em; min-width: 600px; display: block; overflow-x: auto; width: 100vw !important; }
+                th, td { font-size: 1em; padding: 0.85em 0.5em; }
             }
         </style>
     </head>
@@ -2024,11 +2051,20 @@ function generarHTMLReporteApoderado(apoderado, tarifas) {
                 .print-btn { display: none; }
             }
             @media (max-width: 600px) {
-                body { padding: 6vw 2vw; font-size: 1.08em; }
-                table { font-size: 1em; min-width: 600px; display: block; overflow-x: auto; }
-                th, td { font-size: 1em; padding: 0.85em 0.5em; }
+                html, body {
+                    width: 100vw !important;
+                    min-width: 0;
+                    max-width: 100vw;
+                    padding: 0 !important;
+                    margin: 0 !important;
+                    overflow-x: auto !important;
+                }
+                body { font-size: 1.08em; background: #fff; }
+                .header, .section, table { margin-left: 0 !important; margin-right: 0 !important; }
                 .header h1 { font-size: 1.2em; }
                 .header h2 { font-size: 1em; }
+                table { font-size: 1em; min-width: 600px; display: block; overflow-x: auto; width: 100vw !important; }
+                th, td { font-size: 1em; padding: 0.85em 0.5em; }
             }
         </style>
     </head>
