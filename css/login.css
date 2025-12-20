@@ -1,64 +1,121 @@
-/* ========== ESTILOS DE LOGIN Y REGISTRO ========== */
+/* ========== VARIABLES DE TEMAS ========== */
+
+:root {
+    --primary-from: #667eea;
+    --primary-to: #764ba2;
+}
+
+/* ========== BODY Y FONDO ========== */
 
 body {
+    margin: 0;
+    padding: 0;
     min-height: 100vh;
     display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    background-attachment: fixed;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
     position: relative;
     overflow-x: hidden;
-    overflow-y: auto;
     transition: background 0.6s ease;
-    padding: 40px 20px;
 }
 
 /* Temas de color */
 body.theme-purple {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #1a1a2e 0%, #2d1b4e 50%, #1e0a3c 100%);
+    --primary-from: #667eea;
+    --primary-to: #764ba2;
 }
 
 body.theme-red {
-    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    background: linear-gradient(135deg, #2e1a1a 0%, #4e1b2d 50%, #3c0a1e 100%);
+    --primary-from: #f093fb;
+    --primary-to: #f5576c;
 }
 
 body.theme-green {
-    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    background: linear-gradient(135deg, #1a2e2e 0%, #1b3d4e 50%, #0a2c3c 100%);
+    --primary-from: #4facfe;
+    --primary-to: #00f2fe;
 }
 
 body.theme-pink {
-    background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+    background: linear-gradient(135deg, #2e1a24 0%, #4e1b35 50%, #3c0a25 100%);
+    --primary-from: #fa709a;
+    --primary-to: #fee140;
 }
 
-/* Círculos decorativos de fondo */
+/* Círculos decorativos */
 body::before {
     content: '';
-    position: absolute;
-    width: 500px;
-    height: 500px;
-    background: rgba(255, 255, 255, 0.1);
+    position: fixed;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(102, 126, 234, 0.15) 0%, transparent 70%);
     border-radius: 50%;
-    top: -250px;
-    left: -250px;
-    animation: float 6s ease-in-out infinite;
+    top: -300px;
+    right: -200px;
+    animation: float 8s ease-in-out infinite;
+    pointer-events: none;
+    z-index: 0;
 }
 
 body::after {
     content: '';
-    position: absolute;
-    width: 400px;
-    height: 400px;
-    background: rgba(255, 255, 255, 0.08);
+    position: fixed;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(118, 75, 162, 0.12) 0%, transparent 70%);
     border-radius: 50%;
-    bottom: -200px;
-    right: -200px;
-    animation: float 8s ease-in-out infinite;
+    bottom: -250px;
+    left: -150px;
+    animation: float 10s ease-in-out infinite reverse;
+    pointer-events: none;
+    z-index: 0;
 }
 
 @keyframes float {
-    0%, 100% { transform: translateY(0px); }
-    50% { transform: translateY(-20px); }
+    0%, 100% { transform: translateY(0px) translateX(0px); }
+    50% { transform: translateY(-30px) translateX(20px); }
+}
+
+/* ========== HEADER ========== */
+
+.login-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.header-content {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 0 20px;
+}
+
+.header-logo {
+    animation: pulse 2s ease-in-out infinite;
+}
+
+.header-title {
+    color: white;
+    font-size: 1.1rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
 }
 
 /* ========== CONTENEDOR DE LOGIN ========== */
@@ -68,46 +125,37 @@ body::after {
     z-index: 1;
     width: 100%;
     max-width: 450px;
-    padding: 0;
+    padding: 0 20px;
+    margin-top: 100px;
+    margin-bottom: 40px;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .login-card {
+    width: 100%;
     background: rgba(255, 255, 255, 0.98);
     backdrop-filter: blur(20px);
-    border-radius: 24px;
-    padding: 40px;
-    box-shadow: 0 25px 70px rgba(0, 0, 0, 0.25), 
-                0 10px 25px rgba(0, 0, 0, 0.15);
-    animation: slideUp 0.5s ease-out;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-.registro-card {
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 35px;
-}
-
-.registro-card .logo-section {
-    margin-bottom: 20px;
-}
-
-.registro-card .logo-section h1 {
-    font-size: 1.6rem;
-}
-
-.registro-card .logo-section p {
-    font-size: 0.9rem;
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: 28px;
+    padding: 45px 40px;
+    box-shadow: 0 25px 70px rgba(0, 0, 0, 0.3), 
+                0 10px 25px rgba(0, 0, 0, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.6);
+    animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 @keyframes slideUp {
     from {
         opacity: 0;
-        transform: translateY(30px);
+        transform: translateY(40px) scale(0.95);
     }
     to {
         opacity: 1;
-        transform: translateY(0);
+        transform: translateY(0) scale(1);
     }
 }
 
@@ -115,12 +163,13 @@ body::after {
 
 .logo-section {
     text-align: center;
-    margin-bottom: 30px;
+    margin-bottom: 35px;
 }
 
-.logo-section svg {
-    margin-bottom: 15px;
-    animation: pulse 2s ease-in-out infinite;
+.main-logo {
+    margin-bottom: 18px;
+    animation: pulse 2.5s ease-in-out infinite;
+    filter: drop-shadow(0 8px 16px rgba(102, 126, 234, 0.3));
 }
 
 @keyframes pulse {
@@ -129,20 +178,36 @@ body::after {
 }
 
 .logo-section h1 {
-    font-size: 1.75rem;
-    color: var(--dark-color);
-    margin-bottom: 5px;
+    font-size: 2rem;
+    color: #1a1a2e;
+    margin: 0 0 8px 0;
+    font-weight: 700;
+    letter-spacing: -0.5px;
 }
 
 .logo-section p {
-    color: var(--text-color);
-    font-size: 0.95rem;
+    color: #64748b;
+    font-size: 1rem;
+    margin: 0;
+    font-weight: 500;
 }
 
 /* ========== FORMULARIO ========== */
 
 .login-form {
     margin-top: 30px;
+}
+
+.form-group {
+    margin-bottom: 22px;
+}
+
+.form-group label {
+    display: block;
+    color: #334155;
+    font-weight: 600;
+    margin-bottom: 8px;
+    font-size: 0.95rem;
 }
 
 .input-with-icon {
@@ -153,52 +218,83 @@ body::after {
 
 .input-icon {
     position: absolute;
-    left: 15px;
-    font-size: 1.2rem;
+    left: 16px;
+    font-size: 1.3rem;
     pointer-events: none;
     z-index: 1;
+    opacity: 0.7;
 }
 
 .input-with-icon input {
-    padding-left: 50px !important;
     width: 100%;
+    padding: 14px 50px 14px 52px;
+    border: 2px solid #e2e8f0;
+    border-radius: 14px;
+    font-size: 1rem;
+    font-family: inherit;
+    background: #f8fafc;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-sizing: border-box;
+}
+
+.input-with-icon input:focus {
+    outline: none;
+    background: white;
+    border-color: var(--primary-from);
+    box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+    transform: translateY(-1px);
 }
 
 .toggle-password {
     position: absolute;
-    right: 15px;
+    right: 14px;
     background: transparent;
     border: none;
     cursor: pointer;
-    font-size: 1.2rem;
-    padding: 5px;
-    transition: transform 0.2s ease;
+    font-size: 1.3rem;
+    padding: 8px;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+    z-index: 1;
 }
 
 .toggle-password:hover {
-    transform: scale(1.2);
+    background: rgba(102, 126, 234, 0.1);
+    transform: scale(1.1);
 }
 
-.login-form input {
-    background: #f9fafb;
-    border: 2px solid #e5e7eb;
-    transition: all 0.3s ease;
+.toggle-password:active {
+    transform: scale(0.95);
 }
 
-.login-form input:focus {
-    background: white;
-    border-color: var(--primary-color);
-    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+.error-message {
+    display: block;
+    color: #ef4444;
+    font-size: 0.875rem;
+    margin-top: 6px;
+    font-weight: 500;
+    min-height: 20px;
 }
+
+.error-message:empty {
+    display: none;
+}
+
+/* ========== BOTÓN DE LOGIN ========== */
 
 .btn-login {
     width: 100%;
+    padding: 16px;
     margin-top: 10px;
-    padding: 14px;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, var(--primary-from) 0%, var(--primary-to) 100%);
     color: white;
     font-size: 1.1rem;
-    transition: all 0.3s ease;
+    font-weight: 600;
+    border: none;
+    border-radius: 14px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 8px 24px rgba(102, 126, 234, 0.3);
     position: relative;
     overflow: hidden;
 }
@@ -210,200 +306,26 @@ body::after {
     left: -100%;
     width: 100%;
     height: 100%;
-    background: rgba(255, 255, 255, 0.2);
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
     transition: left 0.5s ease;
+}
+
+.btn-login:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 32px rgba(102, 126, 234, 0.4);
 }
 
 .btn-login:hover::before {
     left: 100%;
 }
 
-.btn-login:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
-}
-
 .btn-login:active {
     transform: translateY(0);
+    box-shadow: 0 4px 16px rgba(102, 126, 234, 0.3);
 }
-
-.register-link {
-    text-align: center;
-    margin-top: 20px;
-}
-
-.register-link p {
-    color: var(--text-color);
-}
-
-.register-link a {
-    color: var(--primary-color);
-    text-decoration: none;
-    font-weight: 600;
-}
-
-.register-link a:hover {
-    text-decoration: underline;
-}
-
-/* ========== REGISTRO DE HIJOS ========== */
-
-.registro-card .form-group {
-    margin-bottom: 1.2rem;
-}
-
-.registro-card h3 {
-    margin-top: 1rem;
-    margin-bottom: 0.5rem;
-    font-size: 1.15rem;
-    color: var(--dark-color);
-}
-
-hr {
-    margin: 25px 0 20px 0;
-    border: none;
-    border-top: 2px solid var(--border-color);
-}
-
-.info-text {
-    font-size: 0.9rem;
-    color: var(--text-color);
-    margin-bottom: 15px;
-    background: #fef3c7;
-    padding: 10px;
-    border-radius: 8px;
-    border-left: 4px solid #f59e0b;
-}
-
-.hijo-item {
-    background: #f9fafb;
-    padding: 15px;
-    border-radius: 10px;
-    margin-bottom: 15px;
-    border: 2px solid var(--border-color);
-}
-
-.codigo-input-group {
-    display: flex;
-    gap: 10px;
-}
-
-.codigo-input-group input {
-    flex: 1;
-    text-transform: uppercase;
-    font-weight: 600;
-    letter-spacing: 2px;
-}
-
-.btn-buscar-codigo {
-    background: var(--primary-color);
-    color: white;
-    padding: 10px 20px;
-    white-space: nowrap;
-}
-
-.estudiante-info {
-    margin-top: 10px;
-    padding: 10px;
-    background: #d1fae5;
-    border-radius: 8px;
-    color: #065f46;
-    font-weight: 600;
-    display: none;
-}
-
-.estudiante-info.show {
-    display: block;
-}
-
-.btn-secondary {
-    width: 100%;
-    margin-top: 10px;
-    margin-bottom: 20px;
-}
-
-.registro-card .btn-login {
-    margin-top: 15px;
-}
-
-/* ========== SELECTOR DE TEMAS ========== */
-
-.theme-selector {
-    text-align: center;
-    margin-top: 25px;
-    padding-top: 20px;
-    border-top: 1px solid var(--border-color);
-}
-
-.theme-label {
-    color: var(--text-color);
-    font-size: 0.9rem;
-    margin-bottom: 12px;
-    font-weight: 500;
-}
-
-.theme-buttons {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-}
-
-.theme-btn {
-    width: 45px;
-    height: 45px;
-    border-radius: 50%;
-    border: 3px solid transparent;
-    background: transparent;
-    padding: 0;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
-}
-
-.theme-btn .theme-color {
-    display: block;
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-}
-
-.theme-btn[data-theme="purple"] .theme-color {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-}
-
-.theme-btn[data-theme="red"] .theme-color {
-    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-}
-
-.theme-btn[data-theme="green"] .theme-color {
-    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-}
-
-.theme-btn[data-theme="pink"] .theme-color {
-    background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
-}
-
-.theme-btn:hover {
-    transform: scale(1.15);
-    border-color: var(--primary-color);
-}
-
-.theme-btn.active {
-    border-color: var(--primary-color);
-    transform: scale(1.1);
-    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
-}
-
-.theme-btn:active {
-    transform: scale(0.95);
-}
-
-/* ========== LOADING SPINNER ========== */
 
 .btn-login.loading {
     pointer-events: none;
-    position: relative;
     color: transparent;
 }
 
@@ -426,145 +348,312 @@ hr {
     to { transform: rotate(360deg); }
 }
 
-/* ========== SCROLLBAR PERSONALIZADO ========== */
+/* ========== LINK DE REGISTRO ========== */
 
-body::-webkit-scrollbar {
-    width: 10px;
+.register-link {
+    text-align: center;
+    margin-top: 25px;
+    padding-top: 20px;
+    border-top: 1px solid #e2e8f0;
 }
 
-body::-webkit-scrollbar-track {
-    background: rgba(0, 0, 0, 0.1);
+.register-link p {
+    color: #64748b;
+    font-size: 0.95rem;
+    margin: 0;
 }
 
-body::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.3);
-    border-radius: 10px;
+.register-link a {
+    color: var(--primary-from);
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.2s ease;
 }
 
-body::-webkit-scrollbar-thumb:hover {
-    background: rgba(255, 255, 255, 0.5);
+.register-link a:hover {
+    color: var(--primary-to);
+    text-decoration: underline;
 }
 
-/* Para Firefox */
-body {
-    scrollbar-width: thin;
-    scrollbar-color: rgba(255, 255, 255, 0.3) rgba(0, 0, 0, 0.1);
+/* ========== SELECTOR DE TEMAS ========== */
+
+.theme-selector {
+    text-align: center;
+    margin-top: 28px;
+    padding-top: 22px;
+    border-top: 1px solid #e2e8f0;
+}
+
+.theme-label {
+    color: #64748b;
+    font-size: 0.9rem;
+    margin-bottom: 14px;
+    font-weight: 500;
+}
+
+.theme-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+}
+
+.theme-btn {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: 3px solid transparent;
+    background: transparent;
+    padding: 0;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+}
+
+.theme-btn .theme-color {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.theme-btn[data-theme="purple"] .theme-color {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.theme-btn[data-theme="red"] .theme-color {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+}
+
+.theme-btn[data-theme="green"] .theme-color {
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+}
+
+.theme-btn[data-theme="pink"] .theme-color {
+    background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+}
+
+.theme-btn:hover {
+    transform: scale(1.15);
+}
+
+.theme-btn.active {
+    border-color: var(--primary-from);
+    transform: scale(1.1);
+    box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.2);
+}
+
+.theme-btn:active {
+    transform: scale(1);
+}
+
+/* ========== FOOTER ========== */
+
+.login-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 18px 20px;
+    z-index: 100;
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
+
+.copyright {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.9rem;
+    margin: 0;
+    font-weight: 500;
+}
+
+.whatsapp-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: #25D366;
+    color: white;
+    text-decoration: none;
+    padding: 10px 20px;
+    border-radius: 25px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 12px rgba(37, 211, 102, 0.4);
+}
+
+.whatsapp-link:hover {
+    background: #128C7E;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(37, 211, 102, 0.5);
+}
+
+.whatsapp-link:active {
+    transform: translateY(0);
+}
+
+.whatsapp-icon {
+    width: 22px;
+    height: 22px;
+    flex-shrink: 0;
+}
+
+.whatsapp-text {
+    white-space: nowrap;
 }
 
 /* ========== RESPONSIVE ========== */
 
 /* Tablets */
-@media (max-width: 1024px) {
-    .login-container {
-        max-width: 500px;
-    }
-    
-    .registro-card {
-        max-width: 550px;
-    }
-}
-
-/* Móviles */
 @media (max-width: 768px) {
-    body {
-        padding: 20px 10px;
+    .login-header {
+        height: 55px;
+    }
+    
+    .header-title {
+        font-size: 1rem;
+    }
+    
+    .header-logo {
+        width: 28px;
+        height: 28px;
     }
     
     .login-container {
-        padding: 0;
-        max-width: 100%;
+        margin-top: 85px;
+        padding: 0 15px;
     }
     
     .login-card {
-        padding: 30px 20px;
-        border-radius: 20px;
+        padding: 35px 28px;
+        border-radius: 24px;
     }
     
-    .registro-card {
-        padding: 30px 20px;
-        max-width: 100%;
+    .logo-section h1 {
+        font-size: 1.7rem;
     }
     
-    .logo-section {
-        margin-bottom: 25px;
+    .logo-section p {
+        font-size: 0.95rem;
     }
     
-    .logo-section svg {
+    .main-logo {
         width: 70px;
         height: 70px;
     }
     
+    .footer-content {
+        flex-direction: column;
+        gap: 12px;
+        text-align: center;
+    }
+    
+    .copyright {
+        font-size: 0.85rem;
+    }
+    
+    .whatsapp-link {
+        padding: 9px 18px;
+        font-size: 0.9rem;
+    }
+    
+    .whatsapp-icon {
+        width: 20px;
+        height: 20px;
+    }
+}
+
+/* Móviles */
+@media (max-width: 480px) {
+    body::before,
+    body::after {
+        opacity: 0.5;
+    }
+    
+    .login-header {
+        height: 50px;
+    }
+    
+    .header-content {
+        padding: 0 15px;
+    }
+    
+    .header-title {
+        font-size: 0.9rem;
+    }
+    
+    .header-logo {
+        width: 26px;
+        height: 26px;
+    }
+    
+    .login-container {
+        margin-top: 75px;
+        margin-bottom: 30px;
+        padding: 0 12px;
+    }
+    
+    .login-card {
+        padding: 30px 22px;
+        border-radius: 22px;
+    }
+    
+    .logo-section {
+        margin-bottom: 28px;
+    }
+    
     .logo-section h1 {
-        font-size: 1.4rem;
+        font-size: 1.5rem;
     }
     
     .logo-section p {
-        font-size: 0.875rem;
+        font-size: 0.9rem;
     }
     
-    .login-form {
-        margin-top: 25px;
+    .main-logo {
+        width: 65px;
+        height: 65px;
+        margin-bottom: 15px;
     }
     
     .form-group {
-        margin-bottom: 1.25rem;
+        margin-bottom: 18px;
     }
     
     .form-group label {
-        font-size: 0.9375rem;
-    }
-    
-    input[type="text"],
-    input[type="email"],
-    input[type="password"],
-    input[type="number"],
-    select {
-        padding: 11px;
-        font-size: 0.9375rem;
+        font-size: 0.9rem;
     }
     
     .input-with-icon input {
-        padding-left: 45px !important;
+        padding: 13px 48px 13px 48px;
+        font-size: 0.95rem;
     }
     
     .input-icon {
-        left: 12px;
-        font-size: 1.1rem;
+        left: 14px;
+        font-size: 1.2rem;
     }
     
     .toggle-password {
         right: 12px;
-        font-size: 1.1rem;
+        font-size: 1.2rem;
     }
     
     .btn-login {
-        padding: 13px;
+        padding: 15px;
         font-size: 1rem;
-    }
-    
-    .hijo-item {
-        padding: 12px;
-    }
-    
-    .codigo-input-group {
-        flex-direction: column;
-    }
-    
-    .btn-buscar-codigo {
-        width: 100%;
-    }
-    
-    .btn-secondary {
-        font-size: 0.9375rem;
-    }
-    
-    .theme-selector {
-        margin-top: 20px;
-        padding-top: 18px;
-    }
-    
-    .theme-label {
-        font-size: 0.875rem;
     }
     
     .theme-buttons {
@@ -572,156 +661,96 @@ body {
     }
     
     .theme-btn {
-        width: 42px;
-        height: 42px;
+        width: 44px;
+        height: 44px;
     }
     
-    .register-link {
-        margin-top: 18px;
+    .login-footer {
+        padding: 15px;
     }
     
-    .register-link p {
-        font-size: 0.9375rem;
+    .whatsapp-text {
+        font-size: 0.85rem;
     }
     
-    body::before,
-    body::after {
-        opacity: 0.5;
+    .whatsapp-link {
+        padding: 8px 16px;
+        font-size: 0.85rem;
+    }
+    
+    .whatsapp-icon {
+        width: 18px;
+        height: 18px;
     }
 }
 
-/* Móviles pequeños */
-@media (max-width: 480px) {
-    body {
-        padding: 15px 8px;
-    }
-    
-    body::before,
-    body::after {
-        display: none;
+/* Móviles muy pequeños */
+@media (max-width: 360px) {
+    .header-title {
+        font-size: 0.8rem;
     }
     
     .login-card {
         padding: 25px 18px;
-        border-radius: 18px;
-    }
-    
-    .registro-card {
-        padding: 25px 18px;
-    }
-    
-    .logo-section svg {
-        width: 60px;
-        height: 60px;
     }
     
     .logo-section h1 {
-        font-size: 1.25rem;
+        font-size: 1.3rem;
     }
     
     .logo-section p {
-        font-size: 0.8125rem;
+        font-size: 0.85rem;
     }
     
-    .form-group label {
-        font-size: 0.875rem;
+    .whatsapp-text {
+        display: none;
     }
     
-    input[type="text"],
-    input[type="email"],
-    input[type="password"],
-    input[type="number"],
-    select {
+    .whatsapp-link {
         padding: 10px;
-        font-size: 0.875rem;
-    }
-    
-    .input-with-icon input {
-        padding-left: 40px !important;
-    }
-    
-    .input-icon {
-        left: 10px;
-        font-size: 1rem;
-    }
-    
-    .toggle-password {
-        right: 10px;
-        font-size: 1rem;
-    }
-    
-    .btn-login {
-        padding: 12px;
-        font-size: 0.9375rem;
-    }
-    
-    .hijo-item {
-        padding: 10px;
-    }
-    
-    .info-text {
-        font-size: 0.8125rem;
-        padding: 8px;
-    }
-    
-    .theme-buttons {
-        gap: 8px;
-    }
-    
-    .theme-btn {
-        width: 38px;
-        height: 38px;
-        border-width: 2px;
-    }
-    
-    .theme-label {
-        font-size: 0.8125rem;
-    }
-    
-    .register-link p {
-        font-size: 0.875rem;
+        border-radius: 50%;
+        width: 44px;
+        height: 44px;
+        justify-content: center;
     }
 }
 
 /* Landscape en móviles */
 @media (max-height: 600px) and (orientation: landscape) {
-    body {
-        padding: 10px;
+    .login-container {
+        margin-top: 70px;
+        margin-bottom: 20px;
     }
     
     .login-card {
-        padding: 20px;
+        padding: 25px;
     }
     
     .logo-section {
-        margin-bottom: 15px;
+        margin-bottom: 20px;
     }
     
-    .logo-section svg {
-        width: 50px;
-        height: 50px;
-        margin-bottom: 8px;
+    .main-logo {
+        width: 55px;
+        height: 55px;
+        margin-bottom: 10px;
     }
     
     .logo-section h1 {
-        font-size: 1.1rem;
-        margin-bottom: 3px;
+        font-size: 1.3rem;
+        margin-bottom: 5px;
     }
     
     .logo-section p {
-        font-size: 0.75rem;
-    }
-    
-    .login-form {
-        margin-top: 15px;
+        font-size: 0.85rem;
     }
     
     .form-group {
-        margin-bottom: 1rem;
+        margin-bottom: 15px;
     }
     
     .theme-selector {
-        margin-top: 15px;
+        margin-top: 18px;
         padding-top: 15px;
     }
 }

@@ -302,23 +302,24 @@
                     <div style="margin-top: 1rem;">
                         <label style="display: block; margin-bottom: 0.5rem; font-weight: 500;">Buscar Apoderado:</label>
                         <div style="display: flex; gap: 1rem; position: relative;">
-                            <div style="flex: 1; position: relative;">
-                                <input 
-                                    type="text" 
-                                    id="buscarApoderadoInput" 
-                                    placeholder="🔍 Escribe el nombre del apoderado..."
-                                    autocomplete="off"
-                                    style="width: 100%; padding: 0.75rem; border: 1px solid #ddd; border-radius: 8px; font-size: 1rem;"
-                                />
-                                <select 
-                                    id="selectApoderadoReporte" 
-                                    size="5"
-                                    style="display: none; position: absolute; top: 100%; left: 0; right: 0; margin-top: 5px; border: 1px solid #ddd; border-radius: 8px; background: white; z-index: 1000; max-height: 200px; overflow-y: auto; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
-                                </select>
+                            <div class="busqueda-apoderado-flex">
+                                <div class="busqueda-apoderado-input">
+                                    <input 
+                                        type="text" 
+                                        id="buscarApoderadoInput" 
+                                        placeholder="🔍 Escribe el nombre del apoderado..."
+                                        autocomplete="off"
+                                    />
+                                    <select 
+                                        id="selectApoderadoReporte" 
+                                        size="5"
+                                        style="display: none; position: absolute; top: 100%; left: 0; right: 0; margin-top: 5px; border: 1px solid #ddd; border-radius: 8px; background: white; z-index: 1000; max-height: 200px; overflow-y: auto; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+                                    </select>
+                                </div>
+                                <button onclick="generarReporteApoderado()" class="btn-primary">
+                                    📄 Generar Reporte Individual
+                                </button>
                             </div>
-                            <button onclick="generarReporteApoderado()" class="btn-primary" style="padding: 0.75rem 2rem;">
-                                📄 Generar Reporte Individual
-                            </button>
                         </div>
                         <div id="apoderadoSeleccionado" style="margin-top: 0.5rem; font-size: 0.9rem; color: #666;"></div>
                     </div>
