@@ -331,7 +331,7 @@ input:focus, select:focus, textarea:focus {
     border-color: var(--primary-color);
 }
 
-/* ========== RESPONSIVE ========== */
+/* ========== RESPONSIVE - SOLUCIÓN DEFINITIVA ========== */
 
 /* Tablets */
 @media (max-width: 1024px) {
@@ -351,6 +351,15 @@ input:focus, select:focus, textarea:focus {
 
 /* Móviles */
 @media (max-width: 768px) {
+    * {
+        box-sizing: border-box;
+    }
+    
+    body {
+        overflow-x: hidden;
+        width: 100vw;
+    }
+    
     .header-content {
         flex-direction: column;
         text-align: center;
@@ -370,9 +379,9 @@ input:focus, select:focus, textarea:focus {
     
     .sidebar {
         padding: 1rem;
+        width: 100%;
     }
     
-    /* GRID 3x2 para mostrar todos los botones */
     .sidebar nav {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
@@ -400,22 +409,37 @@ input:focus, select:focus, textarea:focus {
         margin-bottom: 0.25rem;
     }
     
+    .dashboard-main {
+        width: 100vw;
+        max-width: 100vw;
+        padding: 0;
+        margin: 0;
+    }
+    
     .content {
-        padding: 1rem;
+        width: 100vw;
+        max-width: 100vw;
+        padding: 0;
+        margin: 0;
     }
     
     .content h2 {
         font-size: 1.35rem;
-        margin-bottom: 1rem;
+        margin: 1rem 1rem 1rem 1rem;
     }
     
     .card-grid {
         grid-template-columns: 1fr;
         gap: 1rem;
+        padding: 0 1rem;
+        width: 100%;
+        margin: 0;
     }
     
     .card {
         padding: 1rem;
+        margin: 0 1rem 1.5rem 1rem;
+        width: calc(100% - 2rem);
     }
     
     .info-card {
@@ -430,27 +454,38 @@ input:focus, select:focus, textarea:focus {
         font-size: 1.75rem;
     }
     
-    /* TABLAS RESPONSIVAS - CORREGIDO */
+    /* TABLAS - SOLUCIÓN FINAL */
+    .section-content {
+        width: 100vw;
+        max-width: 100vw;
+        overflow-x: hidden;
+        padding: 0;
+        margin: 0;
+    }
+    
     .table-container {
-        width: 100% !important;
-        max-width: 100% !important;
-        margin-left: 0 !important;
-        margin-right: 0 !important;
+        width: 100vw !important;
+        max-width: 100vw !important;
+        overflow-x: auto !important;
+        margin: 1rem 0 !important;
         padding: 0 !important;
-        overflow-x: auto;
-        box-sizing: border-box;
+        box-sizing: border-box !important;
+        position: relative;
+        left: 0;
+        right: 0;
     }
     
     table {
-        width: 100% !important;
-        min-width: 700px;
-        font-size: 0.9rem !important;
+        width: calc(100vw - 2rem) !important;
+        margin: 0 1rem !important;
+        min-width: 650px;
+        font-size: 0.85rem !important;
         background: white;
     }
     
     th, td {
-        padding: 0.75rem 0.5rem !important;
-        font-size: 0.9rem !important;
+        padding: 0.65rem 0.4rem !important;
+        font-size: 0.85rem !important;
         white-space: nowrap;
     }
     
@@ -472,18 +507,18 @@ input:focus, select:focus, textarea:focus {
         color: #fff !important;
     }
     
-    /* Mejora del scroll horizontal */
     .table-container::-webkit-scrollbar {
-        height: 6px;
+        height: 8px;
     }
     
     .table-container::-webkit-scrollbar-track {
         background: #f3f4f6;
+        border-radius: 4px;
     }
     
     .table-container::-webkit-scrollbar-thumb {
         background: #c7d2fe;
-        border-radius: 3px;
+        border-radius: 4px;
     }
     
     .btn, button, .btn-primary, .btn-secondary {
@@ -504,26 +539,13 @@ input:focus, select:focus, textarea:focus {
     .nav-item span {
         font-size: 1.35rem;
     }
-}
-/* ========== FIX TABLAS MÓVIL - DEFINITIVO ========== */
-
-@media (max-width: 768px) {
-    .content {
-        padding: 1rem 0 !important;
-    }
-    
-    .card {
-        margin: 0 1rem 1.5rem 1rem !important;
-    }
-    
-    .table-container {
-        width: 100vw !important;
-        margin-left: calc(-50vw + 50%) !important;
-        padding: 0 1rem !important;
-        box-sizing: border-box !important;
-    }
     
     table {
-        width: 100% !important;
+        font-size: 0.75rem !important;
+    }
+    
+    th, td {
+        padding: 0.5rem 0.3rem !important;
+        font-size: 0.75rem !important;
     }
 }
