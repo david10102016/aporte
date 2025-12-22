@@ -505,3 +505,25 @@ input:focus, select:focus, textarea:focus {
         font-size: 1.35rem;
     }
 }
+/* ========== FIX TABLAS MÓVIL - DEFINITIVO ========== */
+
+@media (max-width: 768px) {
+    .content {
+        padding: 1rem 0 !important;
+    }
+    
+    .card {
+        margin: 0 1rem 1.5rem 1rem !important;
+    }
+    
+    .table-container {
+        width: 100vw !important;
+        margin-left: calc(-50vw + 50%) !important;
+        padding: 0 1rem !important;
+        box-sizing: border-box !important;
+    }
+    
+    table {
+        width: 100% !important;
+    }
+}
