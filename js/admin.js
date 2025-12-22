@@ -1298,34 +1298,34 @@ function generarHTMLReporteEstudiantes(estudiantes, filtro) {
         
         <div class="table-wrapper" style="width:100vw;max-width:100vw;overflow-x:auto;display:flex;justify-content:center;">
             <table style="width:100vw;max-width:100vw;border-collapse:collapse;margin-bottom:20px;background:#fff;box-sizing:border-box;">
-            <thead>
-                <tr>
-                    <th>Código</th>
-                    <th>Nombre Completo</th>
-                    <th>Nivel</th>
-                    <th>Grado</th>
-                    <th>Paralelo</th>
-                    <th>Estado</th>
-                    <th>Apoderado</th>
-                    <th>Contacto</th>
-                </tr>
-            </thead>
-            <tbody>
-                ${estudiantes.map(est => `
+                <thead>
                     <tr>
-                        <td>${est.codigo}</td>
-                        <td>${est.nombre_completo}</td>
-                        <td>${est.nivel}</td>
-                        <td>${est.grado || '-'}</td>
-                        <td>${est.paralelo || '-'}</td>
-                        <td>${est.estado === 'asignado' ? '✅' : '⏳'}</td>
-                        <td>${est.apoderados ? est.apoderados.nombre_completo : '-'}</td>
-                        <td>${est.apoderados ? est.apoderados.telefono || est.apoderados.email : '-'}</td>
+                        <th>Código</th>
+                        <th>Nombre Completo</th>
+                        <th>Nivel</th>
+                        <th>Grado</th>
+                        <th>Paralelo</th>
+                        <th>Estado</th>
+                        <th>Apoderado</th>
+                        <th>Contacto</th>
                     </tr>
-                `).join('')}
-            </tbody>
-                </table>
-            </div>
+                </thead>
+                <tbody>
+                    ${estudiantes.map(est => `
+                        <tr>
+                            <td>${est.codigo}</td>
+                            <td>${est.nombre_completo}</td>
+                            <td>${est.nivel}</td>
+                            <td>${est.grado || '-'}</td>
+                            <td>${est.paralelo || '-'}</td>
+                            <td>${est.estado === 'asignado' ? '✅' : '⏳'}</td>
+                            <td>${est.apoderados ? est.apoderados.nombre_completo : '-'}</td>
+                            <td>${est.apoderados ? est.apoderados.telefono || est.apoderados.email : '-'}</td>
+                        </tr>
+                    `).join('')}
+                </tbody>
+            </table>
+        </div>
     </body>
     </html>
     `;
