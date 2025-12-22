@@ -1296,6 +1296,7 @@ function generarHTMLReporteEstudiantes(estudiantes, filtro) {
             <strong>Total de estudiantes:</strong> ${estudiantes.length}
         </div>
         
+        <div class="table-wrapper">
         <table>
             <thead>
                 <tr>
@@ -1324,6 +1325,7 @@ function generarHTMLReporteEstudiantes(estudiantes, filtro) {
                 `).join('')}
             </tbody>
         </table>
+        </div>
     </body>
     </html>
     `;
@@ -1777,30 +1779,33 @@ window.generarReporteApoderado = async function() {
         
         // Obtener datos completos del apoderado Y las tarifas
         const [apoderadoResult, tarifasResult] = await Promise.all([
-            supabase
-                .from('apoderados')
-                .select(`
-                    *,
-                    estudiantes (
-                        id,
-                        codigo,
-                        nombre_completo,
-                        nivel,
-                        grado,
-                        paralelo
-                    ),
-                    pagos (
-                        id,
-                        mes,
-                        monto,
-                        fecha_subida,
-                        estado,
-                        comprobante_url
-                    )
-                `)
-                .eq('id', apoderadoId)
-                .single(),
-            supabase
+            <style>
+                * { margin: 0; padding: 0; box-sizing: border-box; }
+                body { font-family: Arial, sans-serif; padding: 12px; background: #fff; }
+                .header { text-align: center; margin-bottom: 24px; }
+                .header h1 { margin: 0; color: #2563eb; font-size: 1.3rem; }
+                .header h2 { font-size: 1.05rem; color: #334155; margin-top: 0.5rem; }
+                .header p { margin: 5px 0; color: #666; font-size: 0.9rem; }
+                .info-box { background: #e0e7ff; padding: 10px; border-radius: 5px; margin-bottom: 16px; font-size: 1rem; }
+                .table-wrapper { width: 100vw; max-width: 100vw; overflow-x: auto; display: flex; justify-content: center; }
+                table { width: 100vw; max-width: 100vw; border-collapse: collapse; margin-bottom: 20px; background: #fff; box-sizing: border-box; }
+                th { background: #e5e7eb; color: #1f2937; padding: 10px 8px; text-align: left; font-size: 0.95rem; }
+                td { padding: 8px; border-bottom: 1px solid #e5e7eb; font-size: 0.9rem; }
+                tr:nth-child(even) { background: #f9fafb; }
+                .print-btn { margin: 16px 0; padding: 10px 20px; background: #2563eb; color: white; border: none; cursor: pointer; border-radius: 5px; font-size: 1rem; }
+                @media print {
+                    .print-btn { display: none; }
+                }
+                @media (max-width: 600px) {
+                    body { padding: 4vw; font-size: 15px; }
+                    .header h1 { font-size: 1.1rem; }
+                    .header h2 { font-size: 0.95rem; }
+                    .info-box { font-size: 0.95rem; }
+                    .table-wrapper { padding: 0; }
+                    table { width: 100vw; max-width: 100vw; font-size: 0.98rem; table-layout: auto; }
+                    th, td { padding: 8px 4px; font-size: 0.92rem; }
+                }
+            </style>
                 .from('tarifas')
                 .select('*')
                 .order('anio', { ascending: false })
