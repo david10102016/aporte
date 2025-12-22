@@ -1252,37 +1252,30 @@ function generarHTMLReporteEstudiantes(estudiantes, filtro) {
     <html>
     <head>
         <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
         <title>Reporte de Estudiantes - ${filtroTexto[filtro]}</title>
         <style>
-            body { font-family: Arial, sans-serif; padding: 20px; }
+            * { margin: 0; padding: 0; box-sizing: border-box; }
+            body { font-family: Arial, sans-serif; padding: 20px; background: #fff; }
             .header { text-align: center; margin-bottom: 30px; }
-            .header h1 { margin: 0; color: #2563eb; }
-            .header p { margin: 5px 0; color: #666; }
+            .header h1 { margin: 0; color: #2563eb; font-size: 1.5rem; }
+            .header h2 { font-size: 1.2rem; color: #334155; margin-top: 0.5rem; }
+            .header p { margin: 5px 0; color: #666; font-size: 0.9rem; }
             .info-box { background: #f3f4f6; padding: 15px; margin-bottom: 20px; border-radius: 8px; }
             table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
-            th { background: #2563eb; color: white; padding: 10px; text-align: left; }
-            td { padding: 8px; border-bottom: 1px solid #e5e7eb; }
+            th { background: #2563eb; color: white; padding: 12px 8px; text-align: left; font-size: 0.9rem; }
+            td { padding: 10px 8px; border-bottom: 1px solid #e5e7eb; font-size: 0.85rem; }
             tr:nth-child(even) { background: #f9fafb; }
-            .print-btn { margin: 20px 0; padding: 10px 20px; background: #2563eb; color: white; border: none; cursor: pointer; border-radius: 5px; }
+            .print-btn { margin: 20px 0; padding: 10px 20px; background: #2563eb; color: white; border: none; cursor: pointer; border-radius: 5px; font-size: 1rem; }
             @media print {
                 .print-btn { display: none; }
             }
-            @media (max-width: 600px) {
-                html, body {
-                    width: 100vw !important;
-                    min-width: 0;
-                    max-width: 100vw;
-                    padding: 0 !important;
-                    margin: 0 !important;
-                    overflow-x: auto !important;
-                }
-                body { font-size: 1.08em; background: #fff; }
-                .header, .info-box, table { margin-left: 0 !important; margin-right: 0 !important; }
-                .header h1 { font-size: 1.2em; }
-                .header h2 { font-size: 1em; }
-                table { font-size: 1em; width: 100vw !important; max-width: 100vw !important; display: table; table-layout: auto; }
-                th, td { font-size: 1em; padding: 0.85em 0.5em; }
+            @media (max-width: 768px) {
+                body { padding: 10px; font-size: 16px; }
+                .header h1 { font-size: 1.3rem; }
+                .header h2 { font-size: 1rem; }
+                table { font-size: 0.95rem; }
+                th, td { padding: 10px 6px; font-size: 0.9rem; }
             }
         </style>
     </head>
@@ -1324,7 +1317,7 @@ function generarHTMLReporteEstudiantes(estudiantes, filtro) {
                         <td>${est.nivel}</td>
                         <td>${est.grado || '-'}</td>
                         <td>${est.paralelo || '-'}</td>
-                        <td>${est.estado === 'asignado' ? '✅ Asignado' : '⏳ Disponible'}</td>
+                        <td>${est.estado === 'asignado' ? '✅' : '⏳'}</td>
                         <td>${est.apoderados ? est.apoderados.nombre_completo : '-'}</td>
                         <td>${est.apoderados ? est.apoderados.telefono || est.apoderados.email : '-'}</td>
                     </tr>
@@ -1335,7 +1328,6 @@ function generarHTMLReporteEstudiantes(estudiantes, filtro) {
     </html>
     `;
     
-    // Abrir en nueva ventana
     const ventana = window.open('', '_blank');
     ventana.document.write(html);
     ventana.document.close();
@@ -1416,11 +1408,9 @@ function generarHTMLReportePagos(pagos, tipo) {
     const tipoTexto = {
         'mes': 'Pagos del Mes',
         'anual': 'Pagos del Año',
-        'pendientes': 'Pagos Pendientes',
-        'morosos': 'Apoderados Morosos'
+        'pendientes': 'Pagos Pendientes'
     };
     
-    // Calcular totales
     const totalMonto = pagos.reduce((sum, p) => sum + parseFloat(p.monto || 0), 0);
     
     const html = `
@@ -1428,39 +1418,32 @@ function generarHTMLReportePagos(pagos, tipo) {
     <html>
     <head>
         <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
         <title>Reporte de Pagos - ${tipoTexto[tipo]}</title>
         <style>
-            body { font-family: Arial, sans-serif; padding: 20px; }
+            * { margin: 0; padding: 0; box-sizing: border-box; }
+            body { font-family: Arial, sans-serif; padding: 20px; background: #fff; }
             .header { text-align: center; margin-bottom: 30px; }
-            .header h1 { margin: 0; color: #2563eb; }
-            .header p { margin: 5px 0; color: #666; }
-            .info-box { background: #f3f4f6; padding: 15px; margin-bottom: 20px; border-radius: 8px; }
+            .header h1 { margin: 0; color: #2563eb; font-size: 1.5rem; }
+            .header h2 { font-size: 1.2rem; color: #334155; margin-top: 0.5rem; }
+            .header p { margin: 5px 0; color: #666; font-size: 0.9rem; }
             .summary { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 20px; }
-            .summary-card { background: white; padding: 15px; border-radius: 8px; border: 1px solid #e5e7eb; }
+            .summary-card { background: #f3f4f6; padding: 15px; border-radius: 8px; text-align: center; }
             table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
-            th { background: #2563eb; color: white; padding: 10px; text-align: left; }
-            td { padding: 8px; border-bottom: 1px solid #e5e7eb; }
+            th { background: #2563eb; color: white; padding: 12px 8px; text-align: left; font-size: 0.9rem; }
+            td { padding: 10px 8px; border-bottom: 1px solid #e5e7eb; font-size: 0.85rem; }
             tr:nth-child(even) { background: #f9fafb; }
-            .print-btn { margin: 20px 0; padding: 10px 20px; background: #2563eb; color: white; border: none; cursor: pointer; border-radius: 5px; }
+            .print-btn { margin: 20px 0; padding: 10px 20px; background: #2563eb; color: white; border: none; cursor: pointer; border-radius: 5px; font-size: 1rem; }
             @media print {
                 .print-btn { display: none; }
             }
-            @media (max-width: 600px) {
-                html, body {
-                    width: 100vw !important;
-                    min-width: 0;
-                    max-width: 100vw;
-                    padding: 0 !important;
-                    margin: 0 !important;
-                    overflow-x: auto !important;
-                }
-                body { font-size: 1.08em; background: #fff; }
-                .header, .info-box, table { margin-left: 0 !important; margin-right: 0 !important; }
-                .header h1 { font-size: 1.2em; }
-                .header h2 { font-size: 1em; }
-                table { font-size: 1em; width: 100vw !important; max-width: 100vw !important; display: table; table-layout: auto; }
-                th, td { font-size: 1em; padding: 0.85em 0.5em; }
+            @media (max-width: 768px) {
+                body { padding: 10px; font-size: 16px; }
+                .header h1 { font-size: 1.3rem; }
+                .header h2 { font-size: 1rem; }
+                .summary { grid-template-columns: 1fr; gap: 10px; }
+                table { font-size: 0.95rem; }
+                th, td { padding: 10px 6px; font-size: 0.9rem; }
             }
         </style>
     </head>
@@ -1484,28 +1467,26 @@ function generarHTMLReportePagos(pagos, tipo) {
             </div>
             <div class="summary-card">
                 <strong>Monto Total:</strong><br>
-                Bs. ${totalMonto.toFixed(2)}
+                Bs ${totalMonto.toFixed(2)}
             </div>
             <div class="summary-card">
                 <strong>Promedio:</strong><br>
-                Bs. ${pagos.length > 0 ? (totalMonto / pagos.length).toFixed(2) : '0.00'}
+                Bs ${pagos.length > 0 ? (totalMonto / pagos.length).toFixed(2) : '0.00'}
             </div>
         </div>
         
         <table>
             <thead>
                 <tr>
-                    <th>Fecha Subida</th>
+                    <th>Fecha</th>
                     <th>Apoderado</th>
-                    <th>Mes Pagado</th>
+                    <th>Mes</th>
                     <th>Monto</th>
                     <th>Estado</th>
-                    <th>Comprobante</th>
                 </tr>
             </thead>
             <tbody>
                 ${pagos.map(pago => {
-                    // Formatear mes de YYYY-MM a nombre legible
                     const [anio, mes] = pago.mes.split('-');
                     const meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 
                                    'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
@@ -1516,9 +1497,8 @@ function generarHTMLReportePagos(pagos, tipo) {
                         <td>${new Date(pago.fecha_subida).toLocaleDateString('es-BO')}</td>
                         <td>${pago.apoderados ? pago.apoderados.nombre_completo : 'N/A'}</td>
                         <td>${mesNombre}</td>
-                        <td>Bs. ${parseFloat(pago.monto).toFixed(2)}</td>
-                        <td>${pago.estado === 'aprobado' ? '✅ Aprobado' : pago.estado === 'rechazado' ? '❌ Rechazado' : '⏳ Pendiente'}</td>
-                        <td>${pago.comprobante_url ? '📄 Sí' : '-'}</td>
+                        <td>Bs ${parseFloat(pago.monto).toFixed(2)}</td>
+                        <td>${pago.estado === 'aprobado' ? '✅' : pago.estado === 'rechazado' ? '❌' : '⏳'}</td>
                     </tr>
                     `;
                 }).join('')}
@@ -1528,7 +1508,6 @@ function generarHTMLReportePagos(pagos, tipo) {
     </html>
     `;
     
-    // Abrir en nueva ventana
     const ventana = window.open('', '_blank');
     ventana.document.write(html);
     ventana.document.close();
@@ -1694,38 +1673,29 @@ function generarHTMLReporteMorosos(morosos) {
     <html>
     <head>
         <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
         <title>Reporte de Apoderados Morosos</title>
         <style>
-            body { font-family: Arial, sans-serif; padding: 20px; }
+            * { margin: 0; padding: 0; box-sizing: border-box; }
+            body { font-family: Arial, sans-serif; padding: 20px; background: #fff; }
             .header { text-align: center; margin-bottom: 30px; }
-            .header h1 { margin: 0; color: #dc2626; }
-            .header p { margin: 5px 0; color: #666; }
-            .alert { background: #fef2f2; border-left: 4px solid #dc2626; padding: 15px; margin-bottom: 20px; }
+            .header h1 { margin: 0; color: #dc2626; font-size: 1.5rem; }
+            .header p { margin: 5px 0; color: #666; font-size: 0.9rem; }
+            .alert { background: #fef2f2; border-left: 4px solid #dc2626; padding: 15px; margin-bottom: 20px; border-radius: 5px; }
             table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
-            th { background: #dc2626; color: white; padding: 10px; text-align: left; }
-            td { padding: 8px; border-bottom: 1px solid #e5e7eb; }
+            th { background: #dc2626; color: white; padding: 12px 8px; text-align: left; font-size: 0.9rem; }
+            td { padding: 10px 8px; border-bottom: 1px solid #e5e7eb; font-size: 0.85rem; }
             tr:nth-child(even) { background: #f9fafb; }
-            .print-btn { margin: 20px 0; padding: 10px 20px; background: #dc2626; color: white; border: none; cursor: pointer; border-radius: 5px; }
+            .print-btn { margin: 20px 0; padding: 10px 20px; background: #dc2626; color: white; border: none; cursor: pointer; border-radius: 5px; font-size: 1rem; }
             .meses-vencidos { color: #dc2626; font-weight: bold; }
             @media print {
                 .print-btn { display: none; }
             }
-            @media (max-width: 600px) {
-                html, body {
-                    width: 100vw !important;
-                    min-width: 0;
-                    max-width: 100vw;
-                    padding: 0 !important;
-                    margin: 0 !important;
-                    overflow-x: auto !important;
-                }
-                body { font-size: 1.08em; background: #fff; }
-                .header, .alert, table { margin-left: 0 !important; margin-right: 0 !important; }
-                .header h1 { font-size: 1.2em; }
-                .header h2 { font-size: 1em; }
-                table { font-size: 1em; width: 100vw !important; max-width: 100vw !important; display: table; table-layout: auto; }
-                th, td { font-size: 1em; padding: 0.85em 0.5em; }
+            @media (max-width: 768px) {
+                body { padding: 10px; font-size: 16px; }
+                .header h1 { font-size: 1.3rem; }
+                table { font-size: 0.95rem; }
+                th, td { padding: 10px 6px; font-size: 0.9rem; }
             }
         </style>
     </head>
@@ -1774,7 +1744,6 @@ function generarHTMLReporteMorosos(morosos) {
     </html>
     `;
     
-    // Abrir en nueva ventana
     const ventana = window.open('', '_blank');
     ventana.document.write(html);
     ventana.document.close();
@@ -1864,22 +1833,18 @@ window.generarReporteApoderado = async function() {
  * Genera HTML imprimible para reporte individual de apoderado
  */
 function generarHTMLReporteApoderado(apoderado, tarifas) {
-    // Obtener fecha actual
     const ahora = new Date();
-    const mesActual = ahora.getMonth() + 1; // 1-12
+    const mesActual = ahora.getMonth() + 1;
     const anioActual = ahora.getFullYear();
     
-    // Determinar si estamos en periodo escolar
     let anioEscolar;
     let dentroDelPeriodoEscolar = false;
     let mensajePeriodoEscolar = '';
     
     if (mesActual >= 2 && mesActual <= 11) {
-        // Dentro del año escolar
         anioEscolar = anioActual;
         dentroDelPeriodoEscolar = true;
     } else {
-        // Fuera del año escolar (Dic/Ene)
         mensajePeriodoEscolar = `
             <div style="background: #fef3c7; border: 2px solid #f59e0b; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
                 <strong>📅 Periodo Escolar:</strong> El año escolar ${anioActual} finalizó en Noviembre. 
@@ -1888,14 +1853,12 @@ function generarHTMLReporteApoderado(apoderado, tarifas) {
         `;
     }
     
-    // Ordenar estudiantes por prioridad: Primaria primero, Secundaria después
     const estudiantesOrdenados = [...apoderado.estudiantes].sort((a, b) => {
         if (a.nivel === 'Primaria' && b.nivel === 'Secundaria') return -1;
         if (a.nivel === 'Secundaria' && b.nivel === 'Primaria') return 1;
         return 0;
     });
     
-    // Calcular la tarifa mensual del apoderado según sus estudiantes
     let tarifaMensual = 0;
     apoderado.estudiantes.forEach(est => {
         if (est.nivel === 'Primaria') {
@@ -1905,40 +1868,27 @@ function generarHTMLReporteApoderado(apoderado, tarifas) {
         }
     });
     
-    console.log('Tarifa mensual calculada:', tarifaMensual);
-    console.log('Estudiantes ordenados:', estudiantesOrdenados.map(e => `${e.nombre_completo} (${e.nivel})`));
-    
-    // Calcular resumen financiero
     const pagosAprobados = apoderado.pagos.filter(p => p.estado === 'aprobado');
     const totalPagado = pagosAprobados.reduce((sum, p) => sum + parseFloat(p.monto), 0);
     
-    // Calcular cuántos estudiantes se cubren con prioridad
     let montoPendiente = totalPagado;
-    let estudiantesCubiertos = 0;
-    let estudiantesParciales = 0;
     const detalleCobertura = [];
     
     estudiantesOrdenados.forEach(est => {
         const tarifaEst = est.nivel === 'Primaria' ? parseFloat(tarifas.primaria) : parseFloat(tarifas.secundaria);
         
         if (montoPendiente >= tarifaEst) {
-            // Estudiante completamente cubierto
             montoPendiente -= tarifaEst;
-            estudiantesCubiertos++;
             detalleCobertura.push(`✅ ${est.nombre_completo} (${est.nivel}): Cubierto`);
         } else if (montoPendiente > 0) {
-            // Estudiante parcialmente cubierto
             const porcentaje = (montoPendiente / tarifaEst * 100).toFixed(0);
-            estudiantesParciales++;
-            detalleCobertura.push(`⚠️ ${est.nombre_completo} (${est.nivel}): ${porcentaje}% cubierto (falta Bs. ${(tarifaEst - montoPendiente).toFixed(2)})`);
+            detalleCobertura.push(`⚠️ ${est.nombre_completo} (${est.nivel}): ${porcentaje}% cubierto`);
             montoPendiente = 0;
         } else {
-            // Estudiante sin cobertura
             detalleCobertura.push(`❌ ${est.nombre_completo} (${est.nivel}): Sin cubrir`);
         }
     });
     
-    // Calcular cuántos meses está cubriendo con el monto pagado
     const mesesCubiertos = tarifaMensual > 0 ? totalPagado / tarifaMensual : 0;
     
     const mesesNombres = {
@@ -1946,17 +1896,12 @@ function generarHTMLReporteApoderado(apoderado, tarifas) {
         7: 'Julio', 8: 'Agosto', 9: 'Septiembre', 10: 'Octubre', 11: 'Noviembre'
     };
     
-    // Calcular meses pendientes solo si estamos en periodo escolar
-    let mesesPagados = 0;
+    let mesesPagados = Math.floor(mesesCubiertos);
     let mesesPendientes = [];
     let estadoGeneral = '';
     let detalleFinanciero = '';
     
     if (dentroDelPeriodoEscolar) {
-        // Meses cubiertos con el pago
-        mesesPagados = Math.floor(mesesCubiertos);
-        
-        // Calcular qué meses del año actual están vencidos
         const mesesEscolaresNum = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
         const mesesVencidos = mesesEscolaresNum.filter(mesNum => {
             const fechaMes = new Date(anioEscolar, mesNum - 1, 1);
@@ -1964,16 +1909,11 @@ function generarHTMLReporteApoderado(apoderado, tarifas) {
             return fechaMes < fechaHoy;
         }).length;
         
-        // Si meses pagados >= meses vencidos → Al día
         if (mesesPagados >= mesesVencidos) {
             estadoGeneral = '✅ Al día';
-            mesesPendientes = [];
         } else {
             estadoGeneral = '⚠️ Pendiente';
             const mesesFaltantes = mesesVencidos - mesesPagados;
-            const montoFaltante = mesesFaltantes * tarifaMensual;
-            
-            // Mostrar los meses que faltan
             const primerMesNoPagado = mesesPagados + 1;
             for (let i = 0; i < mesesFaltantes && (primerMesNoPagado + i) <= 11; i++) {
                 const mesNum = mesesEscolaresNum[primerMesNoPagado - 1 + i];
@@ -1986,39 +1926,22 @@ function generarHTMLReporteApoderado(apoderado, tarifas) {
         detalleFinanciero = `
             <div style="background: #dbeafe; border-left: 4px solid #3b82f6; padding: 15px; border-radius: 5px; margin-top: 15px;">
                 <div style="margin-bottom: 10px;">
-                    💡 <strong style="font-size: 14px;">Cálculo:</strong> Bs. ${totalPagado.toFixed(2)} ÷ Bs. ${tarifaMensual.toFixed(2)}/mes = ${mesesCubiertos.toFixed(2)} meses
+                    💡 <strong>Cálculo:</strong> Bs ${totalPagado.toFixed(2)} ÷ Bs ${tarifaMensual.toFixed(2)}/mes = ${mesesCubiertos.toFixed(2)} meses
                 </div>
-                <div style="margin-bottom: 10px;">
-                    <strong>Tarifa mensual total:</strong> Bs. ${tarifaMensual.toFixed(2)}/mes (${apoderado.estudiantes.length} estudiante${apoderado.estudiantes.length > 1 ? 's' : ''})
-                </div>
-                <div style="background: white; padding: 10px; border-radius: 5px;">
-                    <strong>📊 Cobertura por estudiante (Primaria tiene prioridad):</strong><br>
-                    <div style="margin-top: 8px; line-height: 1.8;">
-                        ${detalleCobertura.map(d => `<div>${d}</div>`).join('')}
-                    </div>
+                <div style="background: white; padding: 10px; border-radius: 5px; margin-top: 10px;">
+                    <strong>📊 Cobertura:</strong><br>
+                    ${detalleCobertura.map(d => `<div style="margin: 5px 0;">${d}</div>`).join('')}
                 </div>
             </div>
         `;
     } else {
-        // Fuera del periodo escolar
-        mesesPagados = Math.floor(mesesCubiertos);
-        mesesPendientes = [];
         estadoGeneral = '✅ Al día (Periodo no iniciado)';
         
         if (totalPagado > 0) {
             detalleFinanciero = `
                 <div style="background: #fef3c7; border-left: 4px solid #f59e0b; padding: 15px; border-radius: 5px; margin-top: 15px;">
                     <div style="margin-bottom: 10px;">
-                        💡 <strong style="font-size: 14px;">Pago adelantado:</strong> Bs. ${totalPagado.toFixed(2)} cubren ${mesesCubiertos.toFixed(2)} meses del próximo año escolar.
-                    </div>
-                    <div style="margin-bottom: 10px;">
-                        <strong>Tarifa mensual total:</strong> Bs. ${tarifaMensual.toFixed(2)}/mes (${apoderado.estudiantes.length} estudiante${apoderado.estudiantes.length > 1 ? 's' : ''})
-                    </div>
-                    <div style="background: white; padding: 10px; border-radius: 5px;">
-                        <strong>📊 Cobertura por estudiante (Primaria tiene prioridad):</strong><br>
-                        <div style="margin-top: 8px; line-height: 1.8;">
-                            ${detalleCobertura.map(d => `<div>${d}</div>`).join('')}
-                        </div>
+                        💡 <strong>Pago adelantado:</strong> Bs ${totalPagado.toFixed(2)} cubren ${mesesCubiertos.toFixed(2)} meses del próximo año escolar.
                     </div>
                 </div>
             `;
@@ -2030,41 +1953,36 @@ function generarHTMLReporteApoderado(apoderado, tarifas) {
     <html>
     <head>
         <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
         <title>Reporte Individual - ${apoderado.nombre_completo}</title>
         <style>
-            body { font-family: Arial, sans-serif; padding: 20px; }
+            * { margin: 0; padding: 0; box-sizing: border-box; }
+            body { font-family: Arial, sans-serif; padding: 20px; background: #fff; }
             .header { text-align: center; margin-bottom: 30px; }
-            .header h1 { margin: 0; color: #2563eb; }
-            .header p { margin: 5px 0; color: #666; }
+            .header h1 { margin: 0; color: #2563eb; font-size: 1.5rem; }
+            .header h2 { font-size: 1.2rem; color: #334155; margin-top: 0.5rem; }
+            .header p { margin: 5px 0; color: #666; font-size: 0.9rem; }
             .section { margin-bottom: 30px; }
-            .section h3 { background: #2563eb; color: white; padding: 10px; margin: 0 0 15px 0; }
+            .section h3 { background: #2563eb; color: white; padding: 10px; margin: 0 0 15px 0; font-size: 1.1rem; }
             .info-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-bottom: 20px; }
             .info-item { background: #f3f4f6; padding: 10px; border-radius: 5px; }
             .info-item strong { display: block; color: #374151; margin-bottom: 5px; }
             table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
-            th { background: #e5e7eb; color: #1f2937; padding: 10px; text-align: left; }
-            td { padding: 8px; border-bottom: 1px solid #e5e7eb; }
+            th { background: #e5e7eb; color: #1f2937; padding: 10px 8px; text-align: left; font-size: 0.9rem; }
+            td { padding: 8px; border-bottom: 1px solid #e5e7eb; font-size: 0.85rem; }
             tr:nth-child(even) { background: #f9fafb; }
-            .print-btn { margin: 20px 0; padding: 10px 20px; background: #2563eb; color: white; border: none; cursor: pointer; border-radius: 5px; }
+            .print-btn { margin: 20px 0; padding: 10px 20px; background: #2563eb; color: white; border: none; cursor: pointer; border-radius: 5px; font-size: 1rem; }
             @media print {
                 .print-btn { display: none; }
             }
-            @media (max-width: 600px) {
-                html, body {
-                    width: 100vw !important;
-                    min-width: 0;
-                    max-width: 100vw;
-                    padding: 0 !important;
-                    margin: 0 !important;
-                    overflow-x: auto !important;
-                }
-                body { font-size: 1.08em; background: #fff; }
-                .header, .section, table { margin-left: 0 !important; margin-right: 0 !important; }
-                .header h1 { font-size: 1.2em; }
-                .header h2 { font-size: 1em; }
-                table { font-size: 1em; width: 100vw !important; max-width: 100vw !important; display: table; table-layout: auto; }
-                th, td { font-size: 1em; padding: 0.85em 0.5em; }
+            @media (max-width: 768px) {
+                body { padding: 10px; font-size: 16px; }
+                .header h1 { font-size: 1.3rem; }
+                .header h2 { font-size: 1rem; }
+                .info-grid { grid-template-columns: 1fr; gap: 10px; }
+                .section h3 { font-size: 1rem; }
+                table { font-size: 0.95rem; }
+                th, td { padding: 10px 6px; font-size: 0.9rem; }
             }
         </style>
     </head>
@@ -2083,7 +2001,6 @@ function generarHTMLReporteApoderado(apoderado, tarifas) {
         
         ${mensajePeriodoEscolar}
         
-        <!-- Información del Apoderado -->
         <div class="section">
             <h3>📋 Información del Apoderado</h3>
             <div class="info-grid">
@@ -2106,7 +2023,6 @@ function generarHTMLReporteApoderado(apoderado, tarifas) {
             </div>
         </div>
         
-        <!-- Estudiantes a Cargo -->
         <div class="section">
             <h3>👨‍👩‍👧‍👦 Estudiantes a Cargo (${apoderado.estudiantes.length})</h3>
             <table>
@@ -2133,13 +2049,12 @@ function generarHTMLReporteApoderado(apoderado, tarifas) {
             </table>
         </div>
         
-        <!-- Resumen Financiero -->
         <div class="section">
             <h3>💰 Resumen Financiero</h3>
             <div class="info-grid">
                 <div class="info-item">
                     <strong>Total Pagado:</strong>
-                    Bs. ${totalPagado.toFixed(2)}
+                    Bs ${totalPagado.toFixed(2)}
                 </div>
                 <div class="info-item">
                     <strong>Meses Pagados:</strong>
@@ -2157,7 +2072,6 @@ function generarHTMLReporteApoderado(apoderado, tarifas) {
             ${detalleFinanciero}
         </div>
         
-        <!-- Historial de Pagos -->
         <div class="section">
             <h3>📑 Historial de Pagos (${apoderado.pagos.length})</h3>
             <table>
@@ -2174,33 +2088,29 @@ function generarHTMLReporteApoderado(apoderado, tarifas) {
                         .sort((a, b) => new Date(b.fecha_subida) - new Date(a.fecha_subida))
                         .map(pago => {
                             const [anio, mes] = pago.mes.split('-');
-                            const mesesNombres = {
-                                2: 'Febrero', 3: 'Marzo', 4: 'Abril', 5: 'Mayo', 6: 'Junio',
-                                7: 'Julio', 8: 'Agosto', 9: 'Septiembre', 10: 'Octubre', 11: 'Noviembre'
-                            };
                             const mesNombre = mesesNombres[parseInt(mes)] + ' ' + anio;
                             
                             return `
                         <tr>
                             <td>${new Date(pago.fecha_subida).toLocaleDateString('es-BO')}</td>
                             <td>${mesNombre}</td>
-                            <td>Bs. ${parseFloat(pago.monto).toFixed(2)}</td>
-                            <td>${pago.estado === 'aprobado' ? '✅ Aprobado' : pago.estado === 'rechazado' ? '❌ Rechazado' : '⏳ Pendiente'}</td>
-                        </tr>
-                            `;
-                        }).join('')}
-                </tbody>
-            </table>
-        </div>
-    </body>
-    </html>
-    `;
-    
-    // Abrir en nueva ventana
-    const ventana = window.open('', '_blank');
-    ventana.document.write(html);
-    ventana.document.close();
+                        <td>Bs ${parseFloat(pago.monto).toFixed(2)}</td>
+                        <td>${pago.estado === 'aprobado' ? '✅' : pago.estado === 'rechazado' ? '❌' : '⏳'}</td>
+                    </tr>
+                        `;
+                    }).join('')}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
+`;
+
+const ventana = window.open('', '_blank');
+ventana.document.write(html);
+ventana.document.close();
 }
+
 
 /**
  * Exporta datos a Excel
