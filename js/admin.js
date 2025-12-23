@@ -1478,14 +1478,41 @@ function generarHTMLReportePagos(pagos, tipo) {
         <title>Reporte de Pagos - ${tipoTexto[tipo]}</title>
         <style>
             * { margin: 0; padding: 0; box-sizing: border-box; }
-            body { font-family: Arial, sans-serif; padding: 20px; background: #fff; }
+            body {
+                font-family: Arial, sans-serif;
+                background: #fff;
+                min-height: 100vh;
+                width: 100vw;
+                text-align: center;
+            }
             .header { text-align: center; margin-bottom: 30px; }
             .header h1 { margin: 0; color: #2563eb; font-size: 1.5rem; }
             .header h2 { font-size: 1.2rem; color: #334155; margin-top: 0.5rem; }
             .header p { margin: 5px 0; color: #666; font-size: 0.9rem; }
             .summary { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 20px; }
             .summary-card { background: #f3f4f6; padding: 15px; border-radius: 8px; text-align: center; }
-            table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+            .table-wrapper {
+                width: 100vw;
+                min-width: 100vw;
+                max-width: 100vw;
+                overflow-x: auto;
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+                text-align: center;
+            }
+            table {
+                min-width: 180px;
+                width: auto;
+                max-width: 100%;
+                border-collapse: collapse;
+                margin-bottom: 20px;
+                background: #fff;
+                box-sizing: border-box;
+                margin-left: auto;
+                margin-right: auto;
+                display: inline-table;
+            }
             th { background: #2563eb; color: white; padding: 12px 8px; text-align: left; font-size: 0.9rem; }
             td { padding: 10px 8px; border-bottom: 1px solid #e5e7eb; font-size: 0.85rem; }
             tr:nth-child(even) { background: #f9fafb; }
@@ -1494,12 +1521,31 @@ function generarHTMLReportePagos(pagos, tipo) {
                 .print-btn { display: none; }
             }
             @media (max-width: 768px) {
-                body { padding: 10px; font-size: 16px; }
-                .header h1 { font-size: 1.3rem; }
-                .header h2 { font-size: 1rem; }
+                body {
+                    font-size: 15px;
+                    min-height: 100vh;
+                    width: 100vw;
+                    text-align: center;
+                }
+                .header h1 { font-size: 1.1rem; }
+                .header h2 { font-size: 0.95rem; }
                 .summary { grid-template-columns: 1fr; gap: 10px; }
-                table { font-size: 0.95rem; }
-                th, td { padding: 10px 6px; font-size: 0.9rem; }
+                .table-wrapper {
+                    width: 100vw;
+                    min-width: 100vw;
+                    max-width: 100vw;
+                    text-align: center;
+                }
+                table {
+                    min-width: 120px;
+                    width: auto;
+                    max-width: 100vw;
+                    font-size: 0.9rem;
+                    margin-left: auto;
+                    margin-right: auto;
+                    display: inline-table;
+                }
+                th, td { padding: 8px 4px; font-size: 0.85rem; }
             }
         </style>
     </head>
@@ -1531,6 +1577,7 @@ function generarHTMLReportePagos(pagos, tipo) {
             </div>
         </div>
         
+        <div class="table-wrapper">
         <table>
             <thead>
                 <tr>
@@ -1560,7 +1607,16 @@ function generarHTMLReportePagos(pagos, tipo) {
                 }).join('')}
             </tbody>
         </table>
+        </div>
     </body>
+        <script>
+            // Forzar reflow/redraw para corregir centrado inicial en móviles
+            setTimeout(function() {
+                document.body.style.display = 'none';
+                document.body.offsetHeight;
+                document.body.style.display = '';
+            }, 50);
+        </script>
     </html>
     `;
     
@@ -1733,12 +1789,39 @@ function generarHTMLReporteMorosos(morosos) {
         <title>Reporte de Apoderados Morosos</title>
         <style>
             * { margin: 0; padding: 0; box-sizing: border-box; }
-            body { font-family: Arial, sans-serif; padding: 20px; background: #fff; }
+            body {
+                font-family: Arial, sans-serif;
+                background: #fff;
+                min-height: 100vh;
+                width: 100vw;
+                text-align: center;
+            }
             .header { text-align: center; margin-bottom: 30px; }
             .header h1 { margin: 0; color: #dc2626; font-size: 1.5rem; }
             .header p { margin: 5px 0; color: #666; font-size: 0.9rem; }
             .alert { background: #fef2f2; border-left: 4px solid #dc2626; padding: 15px; margin-bottom: 20px; border-radius: 5px; }
-            table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+            .table-wrapper {
+                width: 100vw;
+                min-width: 100vw;
+                max-width: 100vw;
+                overflow-x: auto;
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+                text-align: center;
+            }
+            table {
+                min-width: 180px;
+                width: auto;
+                max-width: 100%;
+                border-collapse: collapse;
+                margin-bottom: 20px;
+                background: #fff;
+                box-sizing: border-box;
+                margin-left: auto;
+                margin-right: auto;
+                display: inline-table;
+            }
             th { background: #dc2626; color: white; padding: 12px 8px; text-align: left; font-size: 0.9rem; }
             td { padding: 10px 8px; border-bottom: 1px solid #e5e7eb; font-size: 0.85rem; }
             tr:nth-child(even) { background: #f9fafb; }
@@ -1748,10 +1831,30 @@ function generarHTMLReporteMorosos(morosos) {
                 .print-btn { display: none; }
             }
             @media (max-width: 768px) {
-                body { padding: 10px; font-size: 16px; }
-                .header h1 { font-size: 1.3rem; }
-                table { font-size: 0.95rem; }
-                th, td { padding: 10px 6px; font-size: 0.9rem; }
+                body {
+                    font-size: 15px;
+                    min-height: 100vh;
+                    width: 100vw;
+                    text-align: center;
+                }
+                .header h1 { font-size: 1.1rem; }
+                .alert { font-size: 0.95rem; }
+                .table-wrapper {
+                    width: 100vw;
+                    min-width: 100vw;
+                    max-width: 100vw;
+                    text-align: center;
+                }
+                table {
+                    min-width: 120px;
+                    width: auto;
+                    max-width: 100vw;
+                    font-size: 0.9rem;
+                    margin-left: auto;
+                    margin-right: auto;
+                    display: inline-table;
+                }
+                th, td { padding: 8px 4px; font-size: 0.85rem; }
             }
         </style>
     </head>
@@ -2082,6 +2185,7 @@ function generarHTMLReporteApoderado(apoderado, tarifas) {
         
         <div class="section">
             <h3>👨‍👩‍👧‍👦 Estudiantes a Cargo (${apoderado.estudiantes.length})</h3>
+            <div class="table-wrapper">
             <table>
                 <thead>
                     <tr>
@@ -2158,10 +2262,19 @@ function generarHTMLReporteApoderado(apoderado, tarifas) {
                     }).join('')}
             </tbody>
         </table>
+        </div>
     </div>
 </body>
-</html>
-`;
+        <script>
+            // Forzar reflow/redraw para corregir centrado inicial en móviles
+            setTimeout(function() {
+                document.body.style.display = 'none';
+                document.body.offsetHeight;
+                document.body.style.display = '';
+            }, 50);
+        </script>
+    </html>
+    `;
 
 const ventana = window.open('', '_blank');
 ventana.document.write(html);
