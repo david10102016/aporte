@@ -1256,7 +1256,16 @@ function generarHTMLReporteEstudiantes(estudiantes, filtro) {
         <title>Reporte de Estudiantes - ${filtroTexto[filtro]}</title>
         <style>
             * { margin: 0; padding: 0; box-sizing: border-box; }
-            body { font-family: Arial, sans-serif; padding: 20px; background: #fff; }
+            body {
+                font-family: Arial, sans-serif;
+                background: #fff;
+                min-height: 100vh;
+                width: 100vw;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: flex-start;
+            }
             .header { text-align: center; margin-bottom: 30px; }
             .header h1 { margin: 0; color: #2563eb; font-size: 1.5rem; }
             .header h2 { font-size: 1.2rem; color: #334155; margin-top: 0.5rem; }
@@ -1276,8 +1285,8 @@ function generarHTMLReporteEstudiantes(estudiantes, filtro) {
             }
             table {
                 min-width: 320px;
-                width: auto;
-                max-width: 100%;
+                width: 100%;
+                max-width: 900px;
                 border-collapse: collapse;
                 margin-bottom: 20px;
                 background: #fff;
@@ -1293,7 +1302,13 @@ function generarHTMLReporteEstudiantes(estudiantes, filtro) {
                 .print-btn { display: none; }
             }
             @media (max-width: 768px) {
-                body { padding: 5px; font-size: 15px; }
+                body {
+                    font-size: 15px;
+                    min-height: 100vh;
+                    width: 100vw;
+                    align-items: center;
+                    justify-content: flex-start;
+                }
                 .header h1 { font-size: 1.1rem; }
                 .header h2 { font-size: 0.95rem; }
                 .table-wrapper {
@@ -1304,9 +1319,9 @@ function generarHTMLReporteEstudiantes(estudiantes, filtro) {
                     align-items: flex-start;
                 }
                 table {
-                    min-width: 260px;
-                    width: auto;
-                    max-width: 100%;
+                    min-width: 220px;
+                    width: 100%;
+                    max-width: 100vw;
                     font-size: 0.9rem;
                     margin-left: auto;
                     margin-right: auto;
