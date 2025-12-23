@@ -1261,6 +1261,7 @@ function generarHTMLReporteEstudiantes(estudiantes, filtro) {
                 background: #fff;
                 min-height: 100vh;
                 width: 100vw;
+                text-align: center;
             }
             .header { text-align: center; margin-bottom: 30px; }
             .header h1 { margin: 0; color: #2563eb; font-size: 1.5rem; }
@@ -1278,7 +1279,7 @@ function generarHTMLReporteEstudiantes(estudiantes, filtro) {
                 text-align: center;
             }
             table {
-                min-width: 220px;
+                min-width: 180px;
                 width: auto;
                 max-width: 100%;
                 border-collapse: collapse;
@@ -1301,6 +1302,7 @@ function generarHTMLReporteEstudiantes(estudiantes, filtro) {
                     font-size: 15px;
                     min-height: 100vh;
                     width: 100vw;
+                    text-align: center;
                 }
                 .header h1 { font-size: 1.1rem; }
                 .header h2 { font-size: 0.95rem; }
@@ -1311,7 +1313,7 @@ function generarHTMLReporteEstudiantes(estudiantes, filtro) {
                     text-align: center;
                 }
                 table {
-                    min-width: 180px;
+                    min-width: 120px;
                     width: auto;
                     max-width: 100vw;
                     font-size: 0.9rem;
