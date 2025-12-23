@@ -1,3 +1,27 @@
+/* Scroll horizontal solo para la tabla de apoderados */
+.tabla-apoderados-scroll {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 0;
+    margin: 0;
+    background: transparent;
+}
+
+.tabla-apoderados {
+    min-width: 800px;
+    width: max-content;
+    border-collapse: collapse;
+    background: white;
+    margin: 0;
+}
+
+.tabla-apoderados th,
+.tabla-apoderados td {
+    padding: 0.85rem 0.5rem;
+    font-size: 0.95rem;
+    white-space: nowrap;
+}
 /* Scroll horizontal solo para la tabla de estudiantes */
 .tabla-estudiantes-scroll {
     width: 100%;

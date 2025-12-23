@@ -425,8 +425,8 @@ function renderApoderados() {
     
     container.innerHTML = `
         <h3>Lista de Apoderados</h3>
-        <div class="table-container" style="display:flex;justify-content:center;">
-            <table>
+        <div class="tabla-apoderados-scroll">
+            <table class="tabla-apoderados">
                 <thead>
                     <tr>
                         <th>Nombre Completo</th>
