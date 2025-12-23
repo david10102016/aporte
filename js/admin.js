@@ -1263,7 +1263,7 @@ function generarHTMLReporteEstudiantes(estudiantes, filtro) {
             .header p { margin: 5px 0; color: #666; font-size: 0.9rem; }
             .info-box { background: #f3f4f6; padding: 15px; margin-bottom: 20px; border-radius: 8px; }
             .table-wrapper { width: 100%; display: flex; justify-content: center; overflow-x: auto; }
-            table { min-width: 650px; max-width: 100%; border-collapse: collapse; margin-bottom: 20px; background: #fff; box-sizing: border-box; }
+            table { min-width: 650px; width: auto; max-width: 100%; border-collapse: collapse; margin-bottom: 20px; background: #fff; box-sizing: border-box; }
             th { background: #2563eb; color: white; padding: 12px 8px; text-align: left; font-size: 0.9rem; }
             td { padding: 10px 8px; border-bottom: 1px solid #e5e7eb; font-size: 0.85rem; }
             tr:nth-child(even) { background: #f9fafb; }
@@ -1275,8 +1275,8 @@ function generarHTMLReporteEstudiantes(estudiantes, filtro) {
                 body { padding: 5px; font-size: 15px; }
                 .header h1 { font-size: 1.1rem; }
                 .header h2 { font-size: 0.95rem; }
-                .table-wrapper { justify-content: flex-start; }
-                table { min-width: 400px; font-size: 0.9rem; }
+                .table-wrapper { justify-content: center; }
+                table { min-width: 320px; width: auto; max-width: 100%; font-size: 0.9rem; }
                 th, td { padding: 8px 4px; font-size: 0.85rem; }
             }
         </style>
