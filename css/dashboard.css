@@ -1,3 +1,7 @@
+/* Solución quirúrgica: min-width solo para la tabla de estudiantes en el dashboard */
+#seccionEstudiantes .table-container table {
+    min-width: 950px !important;
+}
 /* ========== GRID BOTONES REPORTES ========== */
 .reportes-btn-grid {
     display: grid;
