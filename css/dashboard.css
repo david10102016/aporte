@@ -3,6 +3,8 @@
     margin-left: 0 !important;
     border-left: none !important;
     left: 0 !important;
+    width: auto !important;
+    max-width: none !important;
 }
 #seccionEstudiantes .table-container table {
     margin-left: 0 !important;
