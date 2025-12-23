@@ -1,3 +1,25 @@
+@media (max-width: 900px) {
+    #seccionEstudiantes .card,
+    #seccionEstudiantes .section-content,
+    #seccionEstudiantes .content {
+        overflow-x: visible !important;
+        width: 100vw !important;
+        max-width: 100vw !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        box-sizing: border-box;
+    }
+    #seccionEstudiantes .table-container {
+        width: 100vw !important;
+        max-width: 100vw !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+}
 /* Solución quirúrgica: min-width solo para la tabla de estudiantes en el dashboard */
 #seccionEstudiantes .table-container table {
     min-width: 950px !important;
