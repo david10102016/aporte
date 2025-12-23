@@ -425,7 +425,7 @@ function renderApoderados() {
     
     container.innerHTML = `
         <h3>Lista de Apoderados</h3>
-        <div class="table-container">
+        <div class="table-container" style="display:flex;justify-content:center;">
             <table>
                 <thead>
                     <tr>
@@ -1296,8 +1296,8 @@ function generarHTMLReporteEstudiantes(estudiantes, filtro) {
             <strong>Total de estudiantes:</strong> ${estudiantes.length}
         </div>
         
-        <div class="table-wrapper" style="width:100vw;max-width:100vw;overflow-x:auto;display:flex;justify-content:center;">
-            <table style="width:100vw;max-width:100vw;border-collapse:collapse;margin-bottom:20px;background:#fff;box-sizing:border-box;">
+        <div class="table-wrapper" style="overflow-x:auto;display:flex;justify-content:center;">
+            <table style="border-collapse:collapse;margin-bottom:20px;background:#fff;box-sizing:border-box;width:100%;min-width:600px;max-width:1200px;">
                 <thead>
                     <tr>
                         <th>Código</th>
@@ -1718,19 +1718,20 @@ function generarHTMLReporteMorosos(morosos) {
             <strong>Nota:</strong> Se consideran morosos los apoderados con pagos pendientes de meses anteriores al actual.
         </div>
         
-        <table>
-            <thead>
-                <tr>
-                    <th>Apoderado</th>
-                    <th>Email</th>
-                    <th>Teléfono</th>
-                    <th>Estudiantes</th>
-                    <th>Meses Vencidos</th>
-                    <th>Meses Pendientes</th>
-                </tr>
-            </thead>
-            <tbody>
-                ${morosos.map(moroso => `
+        <div class="table-wrapper" style="overflow-x:auto;display:flex;justify-content:center;">
+            <table style="border-collapse:collapse;margin-bottom:20px;background:#fff;box-sizing:border-box;width:100%;min-width:600px;max-width:1200px;">
+                <thead>
+                    <tr>
+                        <th>Apoderado</th>
+                        <th>Email</th>
+                        <th>Teléfono</th>
+                        <th>Estudiantes</th>
+                        <th>Meses Vencidos</th>
+                        <th>Meses Pendientes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${morosos.map(moroso => `
                     <tr>
                         <td>${moroso.nombre_completo}</td>
                         <td>${moroso.email}</td>
