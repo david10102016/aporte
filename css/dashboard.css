@@ -496,9 +496,14 @@ input:focus, select:focus, textarea:focus {
     .section-content {
         width: 100%;
         max-width: 100%;
-        overflow-x: hidden;
+        /* overflow-x: hidden; */
         padding: 0;
         margin: 0;
+    }
+
+    /* Solo para la tabla de estudiantes, permitir scroll horizontal */
+    #seccionEstudiantes .table-container {
+        overflow-x: auto !important;
     }
     
     /* Contenedor de tabla ocupa el ancho disponible del content */
