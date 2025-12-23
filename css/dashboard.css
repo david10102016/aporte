@@ -410,36 +410,36 @@ input:focus, select:focus, textarea:focus {
     }
     
     .dashboard-main {
-        width: 100vw;
-        max-width: 100vw;
+        width: 100%;
+        max-width: 100%;
         padding: 0;
         margin: 0;
     }
     
     .content {
-        width: 100vw;
-        max-width: 100vw;
-        padding: 0;
+        width: 100%;
+        max-width: 100%;
+        padding: 1rem;
         margin: 0;
     }
     
     .content h2 {
         font-size: 1.35rem;
-        margin: 1rem 1rem 1rem 1rem;
+        margin: 0 0 1rem 0;
     }
     
     .card-grid {
         grid-template-columns: 1fr;
         gap: 1rem;
-        padding: 0 1rem;
+        padding: 0;
         width: 100%;
         margin: 0;
     }
     
     .card {
         padding: 1rem;
-        margin: 0 1rem 1.5rem 1rem;
-        width: calc(100% - 2rem);
+        margin: 0 0 1.5rem 0;
+        width: 100%;
     }
     
     .info-card {
@@ -454,33 +454,37 @@ input:focus, select:focus, textarea:focus {
         font-size: 1.75rem;
     }
     
-    /* TABLAS - SOLUCIÓN FINAL */
+    /* ========== SOLUCIÓN TABLAS MÓVILES ========== */
     .section-content {
-        width: 100vw;
-        max-width: 100vw;
+        width: 100%;
+        max-width: 100%;
         overflow-x: hidden;
         padding: 0;
         margin: 0;
     }
     
+    /* Contenedor de tabla ocupa el ancho disponible del content */
     .table-container {
-        width: 100vw !important;
-        max-width: 100vw !important;
+        width: 100% !important;
+        max-width: 100% !important;
         overflow-x: auto !important;
         margin: 1rem 0 !important;
         padding: 0 !important;
         box-sizing: border-box !important;
         position: relative;
-        left: 0;
-        right: 0;
+        /* Eliminar márgenes negativos */
+        left: auto;
+        right: auto;
     }
     
+    /* Tabla se ajusta al contenedor */
     table {
-        width: calc(100vw - 2rem) !important;
-        margin: 0 1rem !important;
-        min-width: 650px;
+        width: 100% !important;
+        margin: 0 !important;
+        min-width: 650px; /* Mantener ancho mínimo para scroll horizontal */
         font-size: 0.85rem !important;
         background: white;
+        box-sizing: border-box;
     }
     
     th, td {
@@ -507,6 +511,7 @@ input:focus, select:focus, textarea:focus {
         color: #fff !important;
     }
     
+    /* Mejorar visualización del scroll */
     .table-container::-webkit-scrollbar {
         height: 8px;
     }
