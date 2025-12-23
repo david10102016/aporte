@@ -1373,6 +1373,14 @@ function generarHTMLReporteEstudiantes(estudiantes, filtro) {
             </table>
         </div>
     </body>
+        <script>
+            // Forzar reflow/redraw para corregir centrado inicial en móviles
+            setTimeout(function() {
+                document.body.style.display = 'none';
+                document.body.offsetHeight;
+                document.body.style.display = '';
+            }, 50);
+        </script>
     </html>
     `;
     
