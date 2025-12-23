@@ -1261,10 +1261,6 @@ function generarHTMLReporteEstudiantes(estudiantes, filtro) {
                 background: #fff;
                 min-height: 100vh;
                 width: 100vw;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                justify-content: flex-start;
             }
             .header { text-align: center; margin-bottom: 30px; }
             .header h1 { margin: 0; color: #2563eb; font-size: 1.5rem; }
@@ -1275,24 +1271,23 @@ function generarHTMLReporteEstudiantes(estudiantes, filtro) {
                 width: 100vw;
                 min-width: 100vw;
                 max-width: 100vw;
-                display: flex;
-                justify-content: center;
-                align-items: flex-start;
                 overflow-x: auto;
                 margin: 0;
                 padding: 0;
                 box-sizing: border-box;
+                text-align: center;
             }
             table {
-                min-width: 320px;
-                width: 100%;
-                max-width: 900px;
+                min-width: 220px;
+                width: auto;
+                max-width: 100%;
                 border-collapse: collapse;
                 margin-bottom: 20px;
                 background: #fff;
                 box-sizing: border-box;
                 margin-left: auto;
                 margin-right: auto;
+                display: inline-table;
             }
             th { background: #2563eb; color: white; padding: 12px 8px; text-align: left; font-size: 0.9rem; }
             td { padding: 10px 8px; border-bottom: 1px solid #e5e7eb; font-size: 0.85rem; }
@@ -1306,8 +1301,6 @@ function generarHTMLReporteEstudiantes(estudiantes, filtro) {
                     font-size: 15px;
                     min-height: 100vh;
                     width: 100vw;
-                    align-items: center;
-                    justify-content: flex-start;
                 }
                 .header h1 { font-size: 1.1rem; }
                 .header h2 { font-size: 0.95rem; }
@@ -1315,16 +1308,16 @@ function generarHTMLReporteEstudiantes(estudiantes, filtro) {
                     width: 100vw;
                     min-width: 100vw;
                     max-width: 100vw;
-                    justify-content: center;
-                    align-items: flex-start;
+                    text-align: center;
                 }
                 table {
-                    min-width: 220px;
-                    width: 100%;
+                    min-width: 180px;
+                    width: auto;
                     max-width: 100vw;
                     font-size: 0.9rem;
                     margin-left: auto;
                     margin-right: auto;
+                    display: inline-table;
                 }
                 th, td { padding: 8px 4px; font-size: 0.85rem; }
             }
