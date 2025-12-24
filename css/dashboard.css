@@ -1,3 +1,14 @@
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+}
+    text-align: center;
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+}
 /* ===== AISLAR ESTILOS DE TABLAS SOLO AL DASHBOARD ADMIN ===== */
 .dashboard-admin .tabla-tarifas-scroll {
     width: 100%;
@@ -22,18 +33,19 @@
 }
 .dashboard-admin .tabla-apoderados-scroll {
     width: 100%;
+    max-width: 100%;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
     padding: 0;
-    margin: 0;
+    margin: 0 auto;
     background: transparent;
 }
 .dashboard-admin .tabla-apoderados {
-    min-width: 800px;
-    width: max-content;
+    width: 100%;
+    max-width: 100%;
     border-collapse: collapse;
     background: white;
-    margin: 0;
+    margin: 0 auto;
 }
 .dashboard-admin .tabla-apoderados th,
 .dashboard-admin .tabla-apoderados td {
@@ -43,18 +55,19 @@
 }
 .dashboard-admin .tabla-estudiantes-scroll {
     width: 100%;
+    max-width: 100%;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
     padding: 0;
-    margin: 0;
+    margin: 0 auto;
     background: transparent;
 }
 .dashboard-admin .tabla-estudiantes {
-    min-width: 950px;
-    width: max-content;
+    width: 100%;
+    max-width: 100%;
     border-collapse: collapse;
     background: white;
-    margin: 0;
+    margin: 0 auto;
 }
 .dashboard-admin .tabla-estudiantes th,
 .dashboard-admin .tabla-estudiantes td {
@@ -82,14 +95,59 @@
         width: 100vw !important;
         max-width: 100vw !important;
         padding-left: 0 !important;
-        padding-right: 0 !important;
-        margin-left: 0 !important;
-        margin-right: 0 !important;
-        box-sizing: border-box;
+/* Gestión de Apoderados - Centrado y ancho completo en PC */
+/* Gestión de Apoderados - Centrado y ancho completo en PC */
+/* Gestión de Apoderados - Card expandido y centrado en PC */
+/* Gestión de Apoderados - Card centrado y tabla expandida quirúrgicamente */
+/* Gestión de Apoderados - Card centrado y tabla expandida quirúrgicamente */
+.dashboard-admin #seccionApoderados .card {
+    width: 100vw;
+    max-width: 100vw;
+    margin: 2rem 0;
+    background: #fff;
+    border-radius: 18px;
+    box-shadow: 0 4px 24px rgba(102,126,234,0.08);
+    padding: 2rem 0 1.5rem 0;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.dashboard-admin #seccionApoderados .card .table-container {
+    width: 100vw;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    overflow-x: auto;
+}
+
+.dashboard-admin #seccionApoderados .card table {
+    width: 100vw;
+    min-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    border-collapse: separate;
+    text-align: center;
+    display: grid;
+}
+
+@media (max-width: 900px) {
+    .dashboard-admin #seccionApoderados .card {
+        max-width: 98vw;
+        padding: 1rem 0.5rem;
     }
-    .dashboard-admin #seccionEstudiantes .table-container {
-        width: 100vw !important;
-        max-width: 100vw !important;
+    .dashboard-admin #seccionApoderados .card table {
+        min-width: 400px;
+    }
+}
+
+@media (max-width: 900px) {
+    .dashboard-admin #seccionApoderados .card {
+        max-width: 98vw;
+        padding: 1rem 0.5rem;
+    }
+}
         margin-left: 0 !important;
         margin-right: 0 !important;
         padding-left: 0 !important;
