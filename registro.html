@@ -23,38 +23,54 @@
             </div>
 
             <form id="registroForm" class="login-form">
-                <div class="form-group">
-                    <label for="nombreCompleto">Nombre Completo *</label>
-                    <input type="text" id="nombreCompleto" placeholder="Juan Pérez Rojas" required>
+                <div style="background: #f0f4ff; color: #374151; border-left: 4px solid #667eea; border-radius: 10px; padding: 1rem; margin-bottom: 1.5rem; font-size: 1.05rem;">
+                    <strong>Importante:</strong> Una vez registrado, deberá iniciar sesión usando su <b>número de teléfono</b> y la <b>contraseña</b> que acaba de crear.
+                </div>
+
+                <div class="form-group input-with-icon">
+                    <span class="input-icon"><i class="fa fa-user"></i></span>
+                    <input type="text" id="nombreCompleto" placeholder="Nombre Completo *" required style="padding-left:2.5rem;">
                     <span class="error-message" id="errorNombre"></span>
                 </div>
 
-                <div class="form-group">
-                    <label for="telefonoRegistro">Teléfono * (Usuario para login)</label>
-                    <input type="text" id="telefonoRegistro" placeholder="71234567" maxlength="8" required>
+                <div class="form-group input-with-icon">
+                    <span class="input-icon"><i class="fa fa-phone"></i></span>
+                    <input type="text" id="telefonoRegistro" placeholder="Teléfono * (Usuario para login)" maxlength="8" required style="padding-left:2.5rem;">
                     <span class="error-message" id="errorTelefonoReg"></span>
                 </div>
 
-                <div class="form-group">
-                    <label for="emailRegistro">Email</label>
-                    <input type="email" id="emailRegistro" placeholder="ejemplo@correo.com">
+                <div class="form-group input-with-icon">
+                    <span class="input-icon"><i class="fa fa-envelope"></i></span>
+                    <input type="email" id="emailRegistro" placeholder="Email (opcional)" style="padding-left:2.5rem;">
                     <span class="error-message" id="errorEmail"></span>
                     <small style="color: #666; font-size: 0.85rem; display: block; margin-top: 0.25rem;">
                         Deje vacío para usar solo su teléfono como usuario
                     </small>
                 </div>
 
-                <div class="form-group">
-                    <label for="passwordRegistro">Contraseña *</label>
-                    <input type="password" id="passwordRegistro" placeholder="••••••••" required>
+                <div class="form-group input-with-icon">
+                    <span class="input-icon"><i class="fa fa-lock"></i></span>
+                    <input type="password" id="passwordRegistro" placeholder="Contraseña *" required style="padding-left:2.5rem;">
                     <span class="error-message" id="errorPass"></span>
                 </div>
 
-                <div class="form-group">
-                    <label for="confirmPassword">Confirmar Contraseña *</label>
-                    <input type="password" id="confirmPassword" placeholder="••••••••" required>
+                <div class="form-group input-with-icon">
+                    <span class="input-icon"><i class="fa fa-lock"></i></span>
+                    <input type="password" id="confirmPassword" placeholder="Confirmar Contraseña *" required style="padding-left:2.5rem;">
                     <span class="error-message" id="errorConfirm"></span>
                 </div>
+
+                <style>
+                @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css');
+                .input-with-icon { position: relative; }
+                .input-icon { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: #667eea; font-size: 1.1rem; }
+                .input-with-icon input { padding-left: 2.5rem !important; font-size: 1.08rem !important; border-radius: 12px; border: 2px solid #e2e8f0; background: #f8fafc; height: 48px; }
+                .input-with-icon input:focus { border-color: #667eea; background: #fff; box-shadow: 0 0 0 2px #c7d2fe; }
+                @media (max-width: 600px) {
+                  .login-card { padding: 18px 6vw !important; }
+                  .input-with-icon input { height: 44px; font-size: 1rem !important; }
+                }
+                </style>
 
                 <hr>
                 <h3>Registra a tus hijos</h3>
