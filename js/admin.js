@@ -239,6 +239,7 @@ function renderEstudiantes() {
 // ========================================
 async function cargarPagos() {
     try {
+        // Traer todos los pagos, no solo los pendientes
         const { data, error } = await supabase
             .from('pagos')
             .select(`
@@ -248,16 +249,11 @@ async function cargarPagos() {
                     telefono
                 )
             `)
-            .eq('estado', 'pendiente')
             .order('fecha_subida', { ascending: false });
-        
         if (error) throw error;
-        
         pagosData = data;
         renderPagos();
-        
         console.log('✅ Pagos cargados:', data.length);
-        
     } catch (error) {
         console.error('Error al cargar pagos:', error);
     }
@@ -267,13 +263,17 @@ function renderPagos() {
     const container = document.querySelector('#seccionPagos .card');
     
     if (!pagosData || pagosData.length === 0) {
-        container.innerHTML = '<p style="text-align:center; color:#666;">No hay pagos pendientes de verificación</p>';
+        container.innerHTML = '<p style="text-align:center; color:#666;">No hay pagos registrados</p>';
         return;
     }
-    
-    container.innerHTML = `
+
+    // Sección de pagos pendientes (con acciones)
+    const pendientes = pagosData.filter(p => p.estado === 'pendiente');
+    let pendientesHtml = '';
+    if (pendientes.length > 0) {
+        pendientesHtml = `
         <h3>Pagos Pendientes de Verificación</h3>
-        ${pagosData.map(pago => `
+        ${pendientes.map(pago => `
             <div class="card" style="margin-top: 1rem; padding: 1rem; border-left: 4px solid #3b82f6;">
                 <div style="display: flex; justify-content: space-between; align-items: start;">
                     <div style="flex: 1;">
@@ -292,7 +292,42 @@ function renderPagos() {
                 </div>
             </div>
         `).join('')}
+        <hr style="margin:2rem 0;">
+        `;
+    }
+
+    // Sección de historial de pagos (todos los estados)
+    const historialHtml = `
+        <h3>Historial de Pagos</h3>
+        <div style="overflow-x:auto;">
+        <table style="width:100%;min-width:700px;margin-top:1rem;">
+            <thead>
+                <tr>
+                    <th>Apoderado</th>
+                    <th>Mes</th>
+                    <th>Monto</th>
+                    <th>Estado</th>
+                    <th>Fecha</th>
+                    <th>Comprobante</th>
+                </tr>
+            </thead>
+            <tbody>
+                ${pagosData.map(pago => `
+                    <tr>
+                        <td>${pago.apoderados.nombre_completo}</td>
+                        <td>${pago.mes}</td>
+                        <td>Bs ${parseFloat(pago.monto).toFixed(2)}</td>
+                        <td><span class="badge badge-${pago.estado === 'aprobado' ? 'success' : pago.estado === 'rechazado' ? 'danger' : 'warning'}">${pago.estado.charAt(0).toUpperCase() + pago.estado.slice(1)}</span></td>
+                        <td>${new Date(pago.fecha_subida).toLocaleDateString('es-BO')}</td>
+                        <td><a href="${pago.comprobante_url}" target="_blank" class="btn-primary" style="padding:0.25rem 0.5rem;font-size:0.9rem;">Ver</a></td>
+                    </tr>
+                `).join('')}
+            </tbody>
+        </table>
+        </div>
     `;
+
+    container.innerHTML = pendientesHtml + historialHtml;
 }
 
 // ========================================
