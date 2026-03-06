@@ -58,6 +58,56 @@ document.getElementById('btnLogout')?.addEventListener('click', async () => {
 });
 
 // ========================================
+// CAMBIAR CONTRASEÑA
+// ========================================
+document.getElementById('btnCambiarPass')?.addEventListener('click', async () => {
+    const result = await Swal.fire({
+        title: 'Cambiar Contraseña',
+        html: `
+            <div style="position:relative; margin-bottom:0.5rem;">
+                <input id="nuevaPass" type="password" autocomplete="new-password" class="swal2-input" placeholder="Nueva contraseña (mín. 6 caracteres)" style="padding-right:2.5rem;">
+                <span onclick="const i=document.getElementById('nuevaPass'); i.type=i.type==='password'?'text':'password'" 
+                      style="position:absolute; right:1rem; top:50%; transform:translateY(-50%); cursor:pointer; font-size:1.2rem;">👁</span>
+            </div>
+            <div style="position:relative;">
+                <input id="confirmarPass" type="password" autocomplete="new-password" class="swal2-input" placeholder="Confirmar contraseña" style="padding-right:2.5rem;">
+                <span onclick="const i=document.getElementById('confirmarPass'); i.type=i.type==='password'?'text':'password'" 
+                      style="position:absolute; right:1rem; top:50%; transform:translateY(-50%); cursor:pointer; font-size:1.2rem;">👁</span>
+            </div>
+        `,
+        confirmButtonText: 'Actualizar',
+        cancelButtonText: 'Cancelar',
+        showCancelButton: true,
+        confirmButtonColor: '#667eea',
+        preConfirm: () => {
+            const nueva = document.getElementById('nuevaPass').value;
+            const confirmar = document.getElementById('confirmarPass').value;
+            if (nueva.length < 6) {
+                Swal.showValidationMessage('Mínimo 6 caracteres');
+                return false;
+            }
+            if (nueva !== confirmar) {
+                Swal.showValidationMessage('Las contraseñas no coinciden');
+                return false;
+            }
+            return nueva;
+        }
+    });
+
+    if (!result.isConfirmed) return;
+
+    const { error } = await supabase.auth.updateUser({
+        password: result.value
+    });
+
+    if (error) {
+        Swal.fire({ icon: 'error', title: 'Error', text: error.message });
+    } else {
+        Swal.fire({ icon: 'success', title: '✅ Contraseña actualizada', text: 'Usa tu nueva contraseña en el próximo inicio de sesión', confirmButtonColor: '#667eea' });
+    }
+});
+
+// ========================================
 // CARGAR ESTADÍSTICAS
 // ========================================
 async function cargarEstadisticas() {
