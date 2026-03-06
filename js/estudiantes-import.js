@@ -139,6 +139,49 @@ export async function importarEstudiantes(estudiantes) {
         errores: []
     };
     
+    // Verificar duplicados
+    const { data: existentes } = await supabase
+        .from('estudiantes')
+        .select('nombre_completo, nivel, grado');
+
+    const duplicados = estudiantes.filter(nuevo =>
+        existentes.some(e =>
+            e.nombre_completo.toLowerCase().trim() === nuevo.nombre_completo.toLowerCase().trim() &&
+            e.nivel === nuevo.nivel &&
+            e.grado === nuevo.grado
+        )
+    );
+
+    if (duplicados.length > 0) {
+        const continuar = await Swal.fire({
+            icon: 'warning',
+            title: `⚠️ ${duplicados.length} posibles duplicados encontrados`,
+            html: `
+                <p>Estos estudiantes ya existen en el sistema:</p>
+                <ul style="text-align:left; max-height:150px; overflow-y:auto; margin-top:0.5rem;">
+                    ${duplicados.map(d => `<li>${d.nombre_completo} - ${d.nivel} ${d.grado}</li>`).join('')}
+                </ul>
+                <p style="margin-top:0.5rem;">¿Desea omitirlos e importar solo los nuevos?</p>
+            `,
+            showCancelButton: true,
+            confirmButtonText: 'Omitir duplicados e importar nuevos',
+            cancelButtonText: 'Cancelar todo',
+            confirmButtonColor: '#667eea',
+            cancelButtonColor: '#ef4444'
+        });
+
+        if (!continuar.isConfirmed) return { exitosos: 0, fallidos: 0, errores: [] };
+
+        // Filtrar solo los nuevos
+        estudiantes = estudiantes.filter(nuevo =>
+            !existentes.some(e =>
+                e.nombre_completo.toLowerCase().trim() === nuevo.nombre_completo.toLowerCase().trim() &&
+                e.nivel === nuevo.nivel &&
+                e.grado === nuevo.grado
+            )
+        );
+    }
+
     // Importar en lotes de 50 para no saturar
     const tamañoLote = 50;
     

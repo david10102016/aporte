@@ -263,7 +263,7 @@ function renderPagos() {
     const container = document.querySelector('#seccionPagos .card');
     
     if (!pagosData || pagosData.length === 0) {
-        container.innerHTML = '<p style="text-align:center; color:#666;">No hay pagos registrados</p>';
+        container.innerHTML = '<p style="text-align:center; color:#4b5563;">No hay pagos registrados</p>';
         return;
     }
 
@@ -454,7 +454,7 @@ function renderApoderados() {
     const container = document.querySelector('#seccionApoderados .card');
     
     if (apoderadosData.length === 0) {
-        container.innerHTML = '<p style="text-align:center; color:#666;">No hay apoderados registrados</p>';
+        container.innerHTML = '<p style="text-align:center; color:#4b5563;">No hay apoderados registrados</p>';
         return;
     }
     
@@ -718,7 +718,7 @@ function mostrarEstudiantes(estudiantes) {
     if (estudiantes.length === 0) {
         tbody.innerHTML = `
             <tr>
-                <td colspan="7" style="text-align: center; padding: 2rem; color: #666;">
+                <td colspan="7" style="text-align: center; padding: 2rem; color: #4b5563;">
                     📚 No hay estudiantes registrados<br>
                     <small>Importa estudiantes desde un archivo Excel</small>
                 </td>
@@ -868,12 +868,57 @@ window.verDetalleEstudiante = async function(estudianteId) {
         }
         
         htmlDetalle += `</div>`;
+
+        if (estudiante.estado === 'asignado') {
+            htmlDetalle += `
+                <div style="margin-top: 1.5rem;">
+                    <button id="btnDesasignar" style="background:#ef4444;color:white;border:none;padding:0.75rem 1.5rem;border-radius:8px;cursor:pointer;width:100%;">
+                        🔓 Desasignar Estudiante
+                    </button>
+                </div>
+            `;
+        }
         
         await Swal.fire({
             html: htmlDetalle,
             width: 600,
             confirmButtonText: 'Cerrar',
-            confirmButtonColor: '#667eea'
+            confirmButtonColor: '#667eea',
+            didOpen: () => {
+                const btnDesasignar = document.getElementById('btnDesasignar');
+                if (btnDesasignar) {
+                    btnDesasignar.addEventListener('click', async () => {
+                        const confirmar = await Swal.fire({
+                            icon: 'warning',
+                            title: '¿Desasignar estudiante?',
+                            text: `${estudiante.nombre_completo} quedará disponible nuevamente`,
+                            showCancelButton: true,
+                            confirmButtonText: 'Sí, desasignar',
+                            cancelButtonText: 'Cancelar',
+                            confirmButtonColor: '#ef4444'
+                        });
+
+                        if (!confirmar.isConfirmed) return;
+
+                        const { error } = await supabase
+                            .from('estudiantes')
+                            .update({
+                                apoderado_id: null,
+                                apoderado_nombre: null,
+                                estado: 'disponible'
+                            })
+                            .eq('id', estudianteId);
+
+                        if (error) {
+                            await Swal.fire({ icon: 'error', title: 'Error', text: error.message });
+                        } else {
+                            await Swal.fire({ icon: 'success', title: '¡Estudiante desasignado!', confirmButtonColor: '#667eea' });
+                            Swal.close();
+                            await cargarTodosEstudiantes();
+                        }
+                    });
+                }
+            }
         });
         
     } catch (error) {
@@ -934,6 +979,22 @@ function actualizarEstadisticasEstudiantes() {
  * Importar estudiantes desde Excel
  */
 window.importarExcelEstudiantes = async function() {
+    const advertencia = await Swal.fire({
+        icon: 'warning',
+        title: '⚠️ Advertencia',
+        html: `
+            <p>Asegúrese de que este archivo <strong>no ha sido importado anteriormente</strong>.</p>
+            <p style="margin-top:0.5rem;">Importar el mismo archivo dos veces creará estudiantes duplicados.</p>
+        `,
+        showCancelButton: true,
+        confirmButtonText: 'Sí, es un archivo nuevo',
+        cancelButtonText: 'Cancelar',
+        confirmButtonColor: '#667eea',
+        cancelButtonColor: '#ef4444'
+    });
+
+    if (!advertencia.isConfirmed) return;
+
     const { value: file } = await Swal.fire({
         title: 'Importar Estudiantes desde Excel',
         html: `
@@ -1096,6 +1157,143 @@ document.getElementById('filtroNivel')?.addEventListener('change', buscarEstudia
 document.getElementById('filtroEstado')?.addEventListener('change', buscarEstudiantes);
 document.getElementById('btnImportarExcel')?.addEventListener('click', importarExcelEstudiantes);
 document.getElementById('btnDescargarPDF')?.addEventListener('click', descargarPDFCodigos);
+document.getElementById('btnAgregarEstudiante')?.addEventListener('click', agregarEstudianteManual);
+
+// ========================================
+// AGREGAR ESTUDIANTE INDIVIDUAL
+// ========================================
+
+/**
+ * Genera código secuencial de 4 dígitos para nuevo estudiante
+ */
+async function generarCodigoSecuencial() {
+    try {
+        const { data, error } = await supabase
+            .from('estudiantes')
+            .select('codigo');
+
+        if (error || !data || data.length === 0) return '0001';
+
+        const codigosNumericos = data
+            .map(est => parseInt(est.codigo))
+            .filter(codigo => !isNaN(codigo))
+            .sort((a, b) => b - a);
+
+        const maxCodigo = codigosNumericos.length > 0 ? codigosNumericos[0] : 0;
+        return (maxCodigo + 1).toString().padStart(4, '0');
+    } catch (error) {
+        console.error('Error en generarCodigoSecuencial:', error);
+        return '0001';
+    }
+}
+
+/**
+ * Formulario SweetAlert2 para agregar un estudiante individualmente
+ */
+async function agregarEstudianteManual() {
+    const { value: formValues } = await Swal.fire({
+        title: '➕ Agregar Estudiante',
+        html: `
+            <div style="text-align:left; display:grid; gap:0.75rem;">
+                <div>
+                    <label style="font-weight:600; color:#1f2937; display:block; margin-bottom:0.25rem;">Nombre completo *</label>
+                    <input id="swalNombre" class="swal2-input" placeholder="Ej: Juan Pérez García" style="margin:0; width:100%;">
+                </div>
+                <div>
+                    <label style="font-weight:600; color:#1f2937; display:block; margin-bottom:0.25rem;">Nivel *</label>
+                    <select id="swalNivel" class="swal2-select" style="margin:0; width:100%; padding:0.5rem; border:1px solid #d1d5db; border-radius:8px;">
+                        <option value="">Seleccione nivel</option>
+                        <option value="Primaria">Primaria</option>
+                        <option value="Secundaria">Secundaria</option>
+                    </select>
+                </div>
+                <div>
+                    <label style="font-weight:600; color:#1f2937; display:block; margin-bottom:0.25rem;">Grado (opcional)</label>
+                    <input id="swalGrado" class="swal2-input" placeholder="Ej: 5to, 6to, 1ro" style="margin:0; width:100%;">
+                </div>
+                <div>
+                    <label style="font-weight:600; color:#1f2937; display:block; margin-bottom:0.25rem;">Paralelo (opcional)</label>
+                    <input id="swalParalelo" class="swal2-input" placeholder="Ej: A, B, C" style="margin:0; width:100%;">
+                </div>
+            </div>
+        `,
+        width: 500,
+        showCancelButton: true,
+        confirmButtonText: 'Agregar',
+        cancelButtonText: 'Cancelar',
+        confirmButtonColor: '#10b981',
+        cancelButtonColor: '#6b7280',
+        focusConfirm: false,
+        preConfirm: () => {
+            const nombre = document.getElementById('swalNombre').value.trim();
+            const nivel = document.getElementById('swalNivel').value;
+            const grado = document.getElementById('swalGrado').value.trim();
+            const paralelo = document.getElementById('swalParalelo').value.trim();
+
+            if (!nombre) {
+                Swal.showValidationMessage('El nombre completo es obligatorio');
+                return false;
+            }
+            if (!nivel) {
+                Swal.showValidationMessage('Debe seleccionar un nivel');
+                return false;
+            }
+
+            return { nombre, nivel, grado: grado || null, paralelo: paralelo || null };
+        }
+    });
+
+    if (!formValues) return;
+
+    try {
+        Swal.fire({ title: 'Registrando...', allowOutsideClick: false, didOpen: () => Swal.showLoading() });
+
+        // Generar código automático
+        const codigo = await generarCodigoSecuencial();
+
+        // Insertar en Supabase
+        const { data, error } = await supabase
+            .from('estudiantes')
+            .insert({
+                codigo: codigo,
+                nombre_completo: formValues.nombre,
+                nivel: formValues.nivel,
+                grado: formValues.grado,
+                paralelo: formValues.paralelo,
+                estado: 'disponible',
+                apoderado_id: null
+            })
+            .select()
+            .single();
+
+        if (error) throw error;
+
+        Swal.close();
+
+        await Swal.fire({
+            icon: 'success',
+            title: '¡Estudiante agregado!',
+            html: `
+                <p><strong>${formValues.nombre}</strong></p>
+                <p>${formValues.nivel}${formValues.grado ? ' - ' + formValues.grado : ''}${formValues.paralelo ? ' "' + formValues.paralelo + '"' : ''}</p>
+                <p style="margin-top:0.5rem; font-size:1.2rem;">Código asignado: <strong style="color:#667eea;">${codigo}</strong></p>
+            `,
+            confirmButtonColor: '#667eea'
+        });
+
+        await cargarTodosEstudiantes();
+
+    } catch (error) {
+        console.error('Error al agregar estudiante:', error);
+        Swal.close();
+        await Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: error.message || 'No se pudo agregar el estudiante',
+            confirmButtonColor: '#ef4444'
+        });
+    }
+}
 
 // ========================================
 // UTILIDADES
@@ -1301,7 +1499,7 @@ function generarHTMLReporteEstudiantes(estudiantes, filtro) {
             .header { text-align: center; margin-bottom: 30px; }
             .header h1 { margin: 0; color: #2563eb; font-size: 1.5rem; }
             .header h2 { font-size: 1.2rem; color: #334155; margin-top: 0.5rem; }
-            .header p { margin: 5px 0; color: #666; font-size: 0.9rem; }
+            .header p { margin: 5px 0; color: #4b5563; font-size: 0.9rem; }
             .info-box { background: #f3f4f6; padding: 15px; margin-bottom: 20px; border-radius: 8px; }
             .table-wrapper {
                 width: 100vw;
@@ -1523,7 +1721,7 @@ function generarHTMLReportePagos(pagos, tipo) {
             .header { text-align: center; margin-bottom: 30px; }
             .header h1 { margin: 0; color: #2563eb; font-size: 1.5rem; }
             .header h2 { font-size: 1.2rem; color: #334155; margin-top: 0.5rem; }
-            .header p { margin: 5px 0; color: #666; font-size: 0.9rem; }
+            .header p { margin: 5px 0; color: #4b5563; font-size: 0.9rem; }
             .summary { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 20px; }
             .summary-card { background: #f3f4f6; padding: 15px; border-radius: 8px; text-align: center; }
             .table-wrapper {
@@ -1833,7 +2031,7 @@ function generarHTMLReporteMorosos(morosos) {
             }
             .header { text-align: center; margin-bottom: 30px; }
             .header h1 { margin: 0; color: #dc2626; font-size: 1.5rem; }
-            .header p { margin: 5px 0; color: #666; font-size: 0.9rem; }
+            .header p { margin: 5px 0; color: #4b5563; font-size: 0.9rem; }
             .alert { background: #fef2f2; border-left: 4px solid #dc2626; padding: 15px; margin-bottom: 20px; border-radius: 5px; }
             .table-wrapper {
                 width: 100vw;
@@ -2156,7 +2354,7 @@ function generarHTMLReporteApoderado(apoderado, tarifas) {
             .header { text-align: center; margin-bottom: 30px; }
             .header h1 { margin: 0; color: #2563eb; font-size: 1.5rem; }
             .header h2 { font-size: 1.2rem; color: #334155; margin-top: 0.5rem; }
-            .header p { margin: 5px 0; color: #666; font-size: 0.9rem; }
+            .header p { margin: 5px 0; color: #4b5563; font-size: 0.9rem; }
             .section { margin-bottom: 30px; }
             .section h3 { background: #2563eb; color: white; padding: 10px; margin: 0 0 15px 0; font-size: 1.1rem; }
             .info-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-bottom: 20px; }

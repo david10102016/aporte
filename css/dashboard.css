@@ -757,3 +757,51 @@ input:focus, select:focus, textarea:focus {
         font-size: 0.75rem !important;
     }
 }
+
+/* ========== FORZAR CONTRASTE EN FONDOS CLAROS (DARK MODE) ========== */
+@media (prefers-color-scheme: dark) {
+    .card,
+    .card * {
+        color: #1f2937;
+    }
+
+    .card h2, .card h3, .card strong {
+        color: #1f2937;
+    }
+
+    .card label {
+        color: #1f2937;
+    }
+
+    .card small {
+        color: #4b5563;
+    }
+
+    .card .badge-success {
+        color: white;
+    }
+
+    .card .badge-warning {
+        color: white;
+    }
+
+    .card .badge-danger {
+        color: white;
+    }
+
+    .card .btn-primary,
+    .card .btn-success,
+    .card .btn-danger {
+        color: white;
+    }
+
+    .card select,
+    .card input {
+        color: #1f2937;
+        background: white;
+    }
+
+    .card a {
+        color: #667eea;
+    }
+}

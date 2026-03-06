@@ -3,7 +3,6 @@
 // ========================================
 
 import { initSupabase, getSupabase } from './supabase-config.js';
-import { validarMonto } from './validaciones.js';
 import { subirComprobante } from './cloudinary.js';
 
 await initSupabase();
@@ -146,20 +145,143 @@ function renderHijos() {
     if (!container) return;
     
     if (hijosData.length === 0) {
-        container.innerHTML = '<p style="text-align:center; color:#666;">No tienes hijos registrados</p>';
+        container.innerHTML = '<p style="text-align:center; color:#4b5563;">No tienes hijos registrados</p>';
         return;
     }
     
     container.innerHTML = hijosData.map(hijo => `
-        <div class="hijo-card">
+        <div class="hijo-card" style="color:#1f2937;">
             <div class="info">
-                <strong>${hijo.nombre_completo}</strong>
+                <strong style="color:#1f2937;">${hijo.nombre_completo}</strong>
                 <span>${hijo.nivel} - ${hijo.grado}</span>
-                <span style="color: #6b7280;">Código: ${hijo.codigo}</span>
+                <span style="color: #4b5563;">Código: ${hijo.codigo}</span>
             </div>
             <span class="badge badge-success">Activo</span>
         </div>
     `).join('');
+
+    // Botón para agregar otro hijo
+    container.insertAdjacentHTML('beforeend', `
+        <button id="btnAgregarHijo" style="margin-top:1rem;width:100%;padding:0.75rem;background:#667eea;color:white;border:none;border-radius:8px;cursor:pointer;font-size:1rem;font-weight:600;">
+            + Agregar otro hijo
+        </button>
+    `);
+
+    document.getElementById('btnAgregarHijo').addEventListener('click', agregarOtroHijo);
+}
+
+/**
+ * Flujo para agregar otro hijo desde el dashboard del padre
+ */
+async function agregarOtroHijo() {
+    // Paso 1: Pedir código
+    const { value: codigo } = await Swal.fire({
+        title: 'Agregar otro hijo',
+        input: 'text',
+        inputLabel: 'Ingrese el código de 4 caracteres del estudiante',
+        inputPlaceholder: 'Ej: A3B7',
+        inputAttributes: { maxlength: 4, style: 'text-transform:uppercase; text-align:center; font-size:1.2rem; letter-spacing:0.3rem;' },
+        showCancelButton: true,
+        confirmButtonText: 'Buscar',
+        cancelButtonText: 'Cancelar',
+        confirmButtonColor: '#667eea',
+        inputValidator: (value) => {
+            if (!value) return 'Debe ingresar un código';
+            if (!/^[A-Za-z0-9]{4}$/.test(value)) return 'El código debe tener 4 caracteres alfanuméricos';
+        }
+    });
+
+    if (!codigo) return;
+
+    const codigoUpper = codigo.toUpperCase();
+
+    // Verificar si ya es hijo del apoderado
+    if (hijosData.some(h => h.codigo === codigoUpper)) {
+        await Swal.fire({ icon: 'info', title: 'Ya registrado', text: 'Este estudiante ya está en tu lista de hijos', confirmButtonColor: '#667eea' });
+        return;
+    }
+
+    try {
+        // Paso 2: Buscar estudiante
+        Swal.fire({ title: 'Buscando...', allowOutsideClick: false, didOpen: () => Swal.showLoading() });
+
+        const { data, error } = await supabase
+            .from('estudiantes')
+            .select('*')
+            .eq('codigo', codigoUpper)
+            .maybeSingle();
+
+        Swal.close();
+
+        if (error) {
+            await Swal.fire({ icon: 'error', title: 'Error', text: error.message, confirmButtonColor: '#ef4444' });
+            return;
+        }
+
+        if (!data) {
+            await Swal.fire({ icon: 'warning', title: 'No encontrado', text: 'El código no existe. Verifique con el colegio.', confirmButtonColor: '#667eea' });
+            return;
+        }
+
+        if (data.estado === 'asignado') {
+            await Swal.fire({ icon: 'warning', title: 'No disponible', text: `Este estudiante ya está asignado a: ${data.apoderado_nombre}`, confirmButtonColor: '#667eea' });
+            return;
+        }
+
+        // Paso 3: Confirmar
+        const confirmar = await Swal.fire({
+            icon: 'question',
+            title: '¿Es tu hijo/a?',
+            html: `<p><strong>${data.nombre_completo}</strong></p><p>${data.nivel} - ${data.grado}</p>`,
+            showCancelButton: true,
+            confirmButtonText: 'Sí, agregar',
+            cancelButtonText: 'No, cancelar',
+            confirmButtonColor: '#10b981',
+            cancelButtonColor: '#ef4444'
+        });
+
+        if (!confirmar.isConfirmed) return;
+
+        // Paso 4: Asignar
+        Swal.fire({ title: 'Asignando...', allowOutsideClick: false, didOpen: () => Swal.showLoading() });
+
+        const { data: updateData, error: updateError } = await supabase
+            .from('estudiantes')
+            .update({
+                apoderado_id: apoderadoActual.id,
+                apoderado_nombre: apoderadoActual.nombre_completo,
+                estado: 'asignado'
+            })
+            .eq('codigo', codigoUpper)
+            .select();
+
+        if (updateError) {
+            Swal.close();
+            await Swal.fire({ icon: 'error', title: 'Error', text: updateError.message, confirmButtonColor: '#ef4444' });
+            return;
+        }
+
+        // Paso 5: Recalcular total mensual
+        await supabase.rpc('calcular_total_mensual', { apoderado_uuid: apoderadoActual.id });
+
+        // Paso 6: Recargar datos ANTES de mostrar el éxito
+        await cargarHijos();
+        renderSelectorHijos();
+        await cargarResumen();
+
+        Swal.close();
+
+        await Swal.fire({
+            icon: 'success',
+            title: '¡Hijo agregado!',
+            html: `<p><strong>${data.nombre_completo}</strong> ha sido vinculado a tu cuenta</p>`,
+            confirmButtonColor: '#667eea'
+        });
+
+    } catch (err) {
+        console.error('Error al agregar hijo:', err);
+        await Swal.fire({ icon: 'error', title: 'Error', text: err.message || 'No se pudo agregar el hijo', confirmButtonColor: '#ef4444' });
+    }
 }
 
 // ========================================
@@ -207,7 +329,7 @@ async function cargarResumen() {
                         <div class="info">
                             <strong>Primaria</strong>
                             <p>${primaria} estudiante(s) × Bs ${tarifasData.primaria} = Bs ${totalPrimaria.toFixed(2)}/mes</p>
-                            <small style="color: #666;">Total anual: Bs ${(totalPrimaria * 10).toFixed(2)}</small>
+                            <small style="color: #4b5563;">Total anual: Bs ${(totalPrimaria * 10).toFixed(2)}</small>
                         </div>
                         <span class="badge badge-success">Activo</span>
                     </div>
@@ -217,7 +339,7 @@ async function cargarResumen() {
                         <div class="info">
                             <strong>Secundaria</strong>
                             <p>${secundaria} estudiante(s) × Bs ${tarifasData.secundaria} = Bs ${totalSecundaria.toFixed(2)}/mes</p>
-                            <small style="color: #666;">Total anual: Bs ${(totalSecundaria * 10).toFixed(2)}</small>
+                            <small style="color: #4b5563;">Total anual: Bs ${(totalSecundaria * 10).toFixed(2)}</small>
                         </div>
                         <span class="badge badge-success">Activo</span>
                     </div>
@@ -292,39 +414,130 @@ async function cargarHistorial() {
 // ========================================
 // SUBIR PAGO
 // ========================================
+
+/**
+ * Renderizar selector de hijos con checkboxes
+ */
+function renderSelectorHijos() {
+    const container = document.getElementById('selectorHijos');
+    if (!container) return;
+
+    if (hijosData.length === 0) {
+        container.innerHTML = '<p style="color:#4b5563;">No tienes hijos registrados</p>';
+        return;
+    }
+
+    container.innerHTML = hijosData.map(hijo => {
+        const tarifa = hijo.nivel === 'Primaria' 
+            ? parseFloat(tarifasData.primaria || 0) 
+            : parseFloat(tarifasData.secundaria || 0);
+        return `
+            <label style="display:flex; align-items:center; gap:0.75rem; padding:0.75rem; background:#f8fafc; border:2px solid #e2e8f0; border-radius:8px; cursor:pointer; transition: all 0.2s;" 
+                   onmouseover="this.style.borderColor='#667eea'" onmouseout="if(!this.querySelector('input').checked) this.style.borderColor='#e2e8f0'">
+                <input type="checkbox" class="hijo-checkbox" value="${hijo.id}" 
+                       data-nivel="${hijo.nivel}" data-tarifa="${tarifa}" 
+                       data-nombre="${hijo.nombre_completo}"
+                       style="width:1.2rem; height:1.2rem; accent-color:#667eea;">
+                <div style="flex:1;">
+                    <strong style="color:#1f2937;">${hijo.nombre_completo}</strong><br>
+                    <small style="color:#4b5563;">${hijo.nivel} - ${hijo.grado}</small>
+                </div>
+                <span style="font-weight:bold; color:#667eea;">Bs ${tarifa.toFixed(2)}</span>
+            </label>
+        `;
+    }).join('');
+
+    // Agregar eventos para recalcular monto
+    container.querySelectorAll('.hijo-checkbox').forEach(cb => {
+        cb.addEventListener('change', recalcularMonto);
+    });
+}
+
+/**
+ * Recalcular monto total según hijos seleccionados
+ */
+function recalcularMonto() {
+    const checkboxes = document.querySelectorAll('.hijo-checkbox:checked');
+    let total = 0;
+    checkboxes.forEach(cb => {
+        total += parseFloat(cb.dataset.tarifa);
+    });
+    const montoInput = document.getElementById('montoTotal');
+    if (montoInput) {
+        montoInput.value = `Bs ${total.toFixed(2)}`;
+    }
+
+    // Resaltar visualmente los seleccionados
+    document.querySelectorAll('.hijo-checkbox').forEach(cb => {
+        const label = cb.closest('label');
+        if (cb.checked) {
+            label.style.borderColor = '#667eea';
+            label.style.background = '#eef2ff';
+        } else {
+            label.style.borderColor = '#e2e8f0';
+            label.style.background = '#f8fafc';
+        }
+    });
+}
+
+/**
+ * Obtener hijos seleccionados con su tarifa
+ */
+function obtenerHijosSeleccionados() {
+    const checkboxes = document.querySelectorAll('.hijo-checkbox:checked');
+    return Array.from(checkboxes).map(cb => ({
+        id: cb.value,
+        nombre: cb.dataset.nombre,
+        nivel: cb.dataset.nivel,
+        tarifa: parseFloat(cb.dataset.tarifa)
+    }));
+}
+
 const formPago = document.getElementById('formSubirPago');
 if (formPago) {
     formPago.addEventListener('submit', async (e) => {
         e.preventDefault();
+        console.log('SUBMIT ejecutado');
+        console.log('Mes seleccionado:', document.getElementById('mesPago')?.value);
         
         const mes = document.getElementById('mesPago').value;
-        const monto = parseFloat(document.getElementById('montoPago').value);
         const archivo = document.getElementById('comprobante').files[0];
         const btnSubmit = e.target.querySelector('button[type="submit"]');
+        const hijosSeleccionados = obtenerHijosSeleccionados();
         
-        // Validar campos
-        if (!mes || !monto || !archivo) {
+        // Validar mes
+        if (!mes) {
             await Swal.fire({
                 icon: 'warning',
-                title: 'Campos incompletos',
-                text: 'Complete todos los campos y seleccione un comprobante',
+                title: 'Seleccione un mes',
+                text: 'Debe seleccionar el mes a pagar',
                 confirmButtonColor: '#667eea'
             });
             return;
         }
-        
-        // Validar monto
-        if (!validarMonto(monto)) {
+
+        // Validar que al menos un hijo esté seleccionado
+        if (hijosSeleccionados.length === 0) {
             await Swal.fire({
                 icon: 'warning',
-                title: 'Monto inválido',
-                text: 'El monto debe ser mayor a 0',
+                title: 'Seleccione al menos un hijo',
+                text: 'Debe marcar los hijos por los que desea pagar',
                 confirmButtonColor: '#667eea'
             });
             return;
         }
-        
+
         // Validar archivo (imagen)
+        if (!archivo) {
+            await Swal.fire({
+                icon: 'warning',
+                title: 'Comprobante requerido',
+                text: 'Debe seleccionar una imagen del comprobante',
+                confirmButtonColor: '#667eea'
+            });
+            return;
+        }
+
         if (!archivo.type.startsWith('image/')) {
             await Swal.fire({
                 icon: 'warning',
@@ -335,11 +548,25 @@ if (formPago) {
             return;
         }
         
+        // Calcular total
+        const montoTotal = hijosSeleccionados.reduce((sum, h) => sum + h.tarifa, 0);
+
+        // Construir detalle para confirmación
+        const detalleHtml = hijosSeleccionados.map(h => 
+            `<p>• ${h.nombre} (${h.nivel}): <strong>Bs ${h.tarifa.toFixed(2)}</strong></p>`
+        ).join('');
+
         // Confirmar
         const confirmar = await Swal.fire({
             icon: 'question',
             title: '¿Subir comprobante?',
-            html: `<p>Mes: <strong>${mes}</strong></p><p>Monto: <strong>Bs ${monto}</strong></p>`,
+            html: `
+                <p style="margin-bottom:0.5rem;">Mes: <strong>${mes}</strong></p>
+                <hr style="margin:0.5rem 0;">
+                ${detalleHtml}
+                <hr style="margin:0.5rem 0;">
+                <p style="font-size:1.1rem;">Total: <strong>Bs ${montoTotal.toFixed(2)}</strong></p>
+            `,
             showCancelButton: true,
             confirmButtonText: 'Sí, subir',
             cancelButtonText: 'Cancelar',
@@ -363,28 +590,32 @@ if (formPago) {
             
             console.log('✅ Imagen subida:', uploadResult.url);
             
-            // 2. Guardar en base de datos
+            // 2. Guardar un registro de pago por cada hijo seleccionado
+            const registros = hijosSeleccionados.map(hijo => ({
+                apoderado_id: apoderadoActual.id,
+                mes: mes,
+                monto: hijo.tarifa,
+                comprobante_url: uploadResult.url,
+                estado: 'pendiente'
+            }));
+
             const { error } = await supabase
                 .from('pagos')
-                .insert({
-                    apoderado_id: apoderadoActual.id,
-                    mes: mes,
-                    monto: monto,
-                    comprobante_url: uploadResult.url,
-                    estado: 'pendiente'
-                });
+                .insert(registros);
             
             if (error) throw error;
             
             await Swal.fire({
                 icon: 'success',
                 title: '¡Comprobante enviado!',
-                text: 'Su pago está pendiente de verificación por el administrador',
+                html: `<p>${hijosSeleccionados.length} pago(s) registrado(s) por Bs ${montoTotal.toFixed(2)}</p><p>Pendiente de verificación por el administrador</p>`,
                 confirmButtonColor: '#667eea'
             });
             
             // Limpiar formulario y recargar historial
             formPago.reset();
+            document.querySelectorAll('.hijo-checkbox').forEach(cb => cb.checked = false);
+            recalcularMonto();
             await cargarHistorial();
             
         } catch (error) {
@@ -411,6 +642,7 @@ if (formPago) {
     
     if (apoderadoActual) {
         await cargarHijos();
+        renderSelectorHijos();
         await cargarResumen();
         await cargarHistorial();
     }

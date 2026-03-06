@@ -94,8 +94,8 @@ CREATE INDEX idx_pagos_mes ON pagos(mes);
 CREATE INDEX idx_pagos_estado ON pagos(estado);
 CREATE INDEX idx_pagos_fecha_subida ON pagos(fecha_subida DESC);
 
--- Constraint único: un apoderado solo puede subir un pago por mes
-CREATE UNIQUE INDEX idx_pagos_unico_apoderado_mes ON pagos(apoderado_id, mes);
+-- Nota: Se permite múltiples pagos por apoderado por mes (uno por cada hijo)
+-- CREATE UNIQUE INDEX idx_pagos_unico_apoderado_mes ON pagos(apoderado_id, mes);
 
 -- ========================================
 -- TABLA: tarifas

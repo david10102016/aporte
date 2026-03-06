@@ -117,6 +117,26 @@ async function buscarEstudiante(btnElement) {
                 ${data.nivel} - ${data.grado}
             </div>
         `;
+
+        // Confirmar que es su hijo
+        const confirmar = await Swal.fire({
+            icon: 'question',
+            title: '¿Es tu hijo/a?',
+            html: `<p><strong>${data.nombre_completo}</strong></p><p>${data.nivel} - ${data.grado}</p>`,
+            showCancelButton: true,
+            confirmButtonText: 'Sí, es mi hijo/a',
+            cancelButtonText: 'No, es otro',
+            confirmButtonColor: '#10b981',
+            cancelButtonColor: '#ef4444'
+        });
+
+        if (!confirmar.isConfirmed) {
+            infoDiv.innerHTML = '';
+            inputCodigo.value = '';
+            btnElement.textContent = 'Buscar';
+            btnElement.disabled = false;
+            return;
+        }
         
         // Guardar código validado
         codigosValidados.push(codigo);

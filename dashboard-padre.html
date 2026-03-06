@@ -89,14 +89,20 @@
                                 <option value="2026-10">Octubre 2026</option>
                                 <option value="2026-11">Noviembre 2026</option>
                             </select>
-                            <small style="color: #666; display: block; margin-top: 0.5rem;">
+                            <small style="color: #4b5563; display: block; margin-top: 0.5rem;">
                                 La gestión educativa comprende 10 meses (Febrero - Noviembre)
                             </small>
                         </div>
 
                         <div class="form-group">
-                            <label for="montoPago">Monto Pagado (Bs) *</label>
-                            <input type="number" id="montoPago" placeholder="100" min="0" step="0.01" required>
+                            <label>Seleccione los hijos a pagar *</label>
+                            <div id="selectorHijos" style="display: grid; gap: 0.5rem;"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Monto Total (Bs)</label>
+                            <input type="text" id="montoTotal" readonly style="background: #f3f4f6; font-weight: bold; font-size: 1.1rem; color: #667eea;" value="Bs 0.00">
+                            <small style="color: #4b5563; display: block; margin-top: 0.25rem;">El monto se calcula automáticamente según los hijos seleccionados</small>
                         </div>
 
                         <div class="form-group">

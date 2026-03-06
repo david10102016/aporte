@@ -154,7 +154,7 @@ export function previsualizarImagen(archivo, contenedorId) {
                 <img src="${e.target.result}" 
                      alt="Preview" 
                      style="max-width: 100%; max-height: 300px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
-                <p style="margin-top: 10px; font-size: 0.9rem; color: #6b7280;">
+                <p style="margin-top: 10px; font-size: 0.9rem; color: #4b5563;">
                     📄 ${archivo.name}<br>
                     📦 Tamaño: ${tamaño}
                     ${archivo.size > 1024 * 1024 ? '<br>🔄 <span style="color: #10b981;">Se optimizará al subir</span>' : ''}
